@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import ReactDOM from "react-dom/client";
+// import ReactDOM from "react-dom/client";
 import './index.css';
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -11,6 +11,9 @@ import Error from "./components/Error";
 import Contact from "./components/Contact";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Instamart from "./components/Instamart";
+import UserContext from "./Utils/UserContext";
+import { Provider } from "react-redux";
+import store from "./Utils/store";
  const AppLayout = () => {
 
     const [user, setUser] = useState({
@@ -18,12 +21,22 @@ import Instamart from "./components/Instamart";
         email: "support@Namastedev.com",
     })
 
+    // useEffect(()=>{
+    //     //authenticate user
+    //     set
+    // },[])
+
     return (
-        <>
+        <Provider store={store}>
+        <UserContext.Provider value={
+            {user: user,
+            setUser: setUser,
+        }}>
         <Header/>
         <Outlet />
         <Footer />
-        </>
+        </UserContext.Provider>
+        </Provider>
     );
 }
 

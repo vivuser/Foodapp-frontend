@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { IMG_CDN_URL } from './Constants';
 import Shimmer from './Shimmer';
 import useRestaurant from '../Utils/useRestaurant';
+import { addItem } from '../Utils/cartSlice';
+import { useDispatch } from 'react-redux';
 
 const RestaurantMenu = () => {
   console.log('Component is rendering'); // Add this line
@@ -11,6 +13,11 @@ const RestaurantMenu = () => {
 
     const { restaurant, menuItems } = useRestaurant(resId);
   
+  const dispatch = useDispatch();
+
+  const handleAddItem = (item) => {
+    dispatch(addItem({item}));
+  }
 
 
   return !restaurant ? (
@@ -25,8 +32,10 @@ const RestaurantMenu = () => {
       <h3>{restaurant.city}</h3>
       <h3>{restaurant.avgRatingString}</h3>
       <h3>{restaurant.costForTwoMessage}</h3>
+      <h1>Menu</h1>
       {Object.values(menuItems).map((item,index)=>(
-          <li key={index}>{item?.card?.info?.name}</li>
+          <li key={index}>{item?.card?.info?.name}-<button onClick
+          ={()=>handleAddItem() }>Add</button></li>
        
       ))}
       </div>

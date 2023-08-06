@@ -1,7 +1,10 @@
+import { useContext } from "react"
 import { IMG_CDN_URL } from "./Constants"
+import UserContext from "../Utils/UserContext"
 
-export const RestaurantCard =({name, cuisines , cloudinaryImageId, totalRatingsString, user}) =>{
+export const RestaurantCard =({name, cuisines , cloudinaryImageId, totalRatingsString}) =>{
 
+    const { user } = useContext(UserContext)
     return (
          <div className="card">
              <img className="img" alt="image" 
@@ -10,6 +13,7 @@ export const RestaurantCard =({name, cuisines , cloudinaryImageId, totalRatingsS
              <h5>{cuisines}</h5>
              <h5>{totalRatingsString}</h5>
              <h6>{user.name}</h6>
+             <h6>{user.email}</h6>
          </div>
      )
  }
