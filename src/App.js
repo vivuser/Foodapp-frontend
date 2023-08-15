@@ -14,6 +14,8 @@ import Instamart from "./components/Instamart";
 import UserContext from "./Utils/UserContext";
 import { Provider } from "react-redux";
 import store from "./Utils/store";
+import Cart from "./components/Cart";
+import Login from "./components/Login";
  const AppLayout = () => {
 
     const [user, setUser] = useState({
@@ -28,14 +30,14 @@ import store from "./Utils/store";
 
     return (
         <Provider store={store}>
-        <UserContext.Provider value={
+        {/* <UserContext.Provider value={
             {user: user,
-            setUser: setUser,
-        }}>
+            setUser: setUser,} */}
+            {/* }> */}
         <Header/>
         <Outlet />
         <Footer />
-        </UserContext.Provider>
+        {/* </UserContext.Provider> */}
         </Provider>
     );
 }
@@ -68,6 +70,14 @@ export const appRouter = createBrowserRouter([
             {
                 path: '/instamart',
                 element: <Instamart />
+            },
+            {
+                path: '/cart',
+                element: <Cart/>
+            },
+            {
+                path: '/login',
+                element: <Login/>
             }
         ]
     }

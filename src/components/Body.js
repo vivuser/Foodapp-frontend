@@ -41,11 +41,11 @@ setFilteredRestaurant(restaurant_array);
 
     return (allRestaurant?.length === 0 )?<Shimmer/>: (
          <>
-        <div className="search-container">
+        <div className="search-container p-5 bg-pink-50 my-5">
         <input type="text" className="search-input" placeholder="Search" value={searchInput}
             onChange={(e)=>setSearchInput(e.target.value)}
         />
-        <button className="search-btn" 
+        <button className="p-2 m-2 bg-purple-900 text-white rounded-md" 
        
        
         onClick = {()=> {
@@ -58,7 +58,7 @@ setFilteredRestaurant(restaurant_array);
             email: "newemail@gmail.com"
         })}></input>
         </div>
-        <div className="restaurant-list">
+        <div className="flex flex-wrap">
         {
         filteredRestaurant.map((restaurant) => {
           return (
