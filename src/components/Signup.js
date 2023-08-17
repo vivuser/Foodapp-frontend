@@ -11,6 +11,7 @@ const Signup = () => {
         e.preventDefault();
         try {
             console.log('Submitting form data...');
+             console.log('Authorization header:', `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`);
             
             const responseComing = await axios.post('http://localhost:8080/signUp', {
                 firstName,
@@ -20,9 +21,12 @@ const Signup = () => {
             },
             {
                 headers: {
-                    Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNzdGdzc2ZkYXNkc2V3YW9zc3NzdHdlc3RAc3Nzb2h1LmNvbSIsImlhdCI6MTY5MTkzOTk5Mn0.aQV8FSHFf7vvYhsBxlazJyr6JtbFI7oTnnEJoQRgU15lu8Mu3j56SgghuqWGHrPr7dINNIHVUYwj3z9vJYxIp5rWbTcfkjQ420x59sF5Fk9s-WRGcncu5AjXbDSryCqamk5qkPVqGmXww5ZzPdlRLLlxS2osrWA-Z47h1w5esAhgBzxqrmTTx0FS10DmbnlecnAhyz7lvBlarJ6nucsRyyi7CQTCEoxLfnUbprSprHQSyOwt16RWTYA3meHH-ljgE45SM5he5bjR0U9Xx3dij-yExDsiptN5svtkOhc1Wfn6P04TVoE58LTJTnL5q9UbBxC3OOh1tVG836W8vUouqw`
+                    Authorization:  `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
                 }
+
+
             });
+
 
             console.log('Response received:', responseComing.data);
 

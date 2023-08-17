@@ -21,11 +21,12 @@ const Header = () => {
     const {user} = useContext(UserContext)
 
     const cartItems = useSelector(store => store.cart.items)
-    console.log(cartItems)
+    // console.log(cartItems)
 
     const changeState= () => {
         setLogin(!login);
     }
+
 
     return (
     <div className="flex justify-between bg-pink-50 shadow-lg">
@@ -56,6 +57,7 @@ const Header = () => {
                 </Link>
             </ul>
         </div>
+
         <h1>{user.name}</h1>
         <button onClick={changeState}>{login ? 'login':'logout'}</button>
     </div>

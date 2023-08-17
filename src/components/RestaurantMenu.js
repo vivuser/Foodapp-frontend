@@ -7,7 +7,6 @@ import { addItem, removeItem } from '../Utils/cartSlice';
 import { useDispatch } from 'react-redux';
 
 const RestaurantMenu = () => {
-  console.log('Component is rendering'); // Add this line
 
   const { resId } = useParams();
 
@@ -26,8 +25,8 @@ const RestaurantMenu = () => {
 
   const handleDecount= (itemId) =>{
     const updatedCount = {...count}
-    updatedCount[itemId] = (updatedCount[itemId] || 0) -1
-    setDecount(updatedCount)
+    updatedCount[itemId] = updatedCount[itemId] >0? (updatedCount[itemId] || 0) -1 : 0;
+    setCount(updatedCount)
   }
 
   const handleAddItem = (item) => {
@@ -36,40 +35,52 @@ const RestaurantMenu = () => {
   }
 
   const handleSubtractItem = (item) =>{
+    if (count[item.id] > 0) {
     dispatch(removeItem({item}))
+    }
     handleDecount(item.id)
   }
 
+  const totalItems = Object.values(count).reduce((total, quantity) => total + quantity,0)
+  console.log(count)
+  console.log(menuItems)
+
+  const filteredArray = Object.values(menuItems).filter(item => count[item.card.info.id] >0);
+  console.log(filteredArray + '====>')  
+
+
+
   return !restaurant ? (
-    <Shimmer/> 
+    <Shimmer /> 
   ) : (
     <div className='flex flex-wrap gap-4'>
-      <div className='w-56 p-2 shadow-lg bg-pink-50'>
-        <h1>Restaurant id: {resId}</h1>
-        <h2>{restaurant.name}</h2>
-        <img className="img-single" alt="image" 
-        src= {IMG_CDN_URL + restaurant.cloudinaryImageId} />
-        <h3>{restaurant.locality}</h3>
-        <h3>{restaurant.city}</h3>
-        <h3>{restaurant.avgRatingString}</h3>
-        <h3>{restaurant.costForTwoMessage}</h3>
-        <h1>Menu</h1>
-      </div>
+            <p>Total Items: {totalItems}</p>
+      {/* ... (restaurant info) */}
       {Object.values(menuItems).map((item, index) => (
         <div className='w-56 p-2 shadow-lg bg-pink-50' key={index}>
           <img src={IMG_CDN_URL + item?.card?.info?.imageId} alt={item?.card?.info?.name} />
-          <div>{item?.card?.info?.name}</div>
+          <div className='font-semibold'>{item?.card?.info?.name}</div>
           <div>₹{item?.card?.info?.price / 100}</div>
-          <div>
-            <button onClick={() => handleAddItem(item?.card?.info)}> + {count[item?.card?.info?.id] || 0}</button> 
-            <button onClick={() => handleSubtractItem(item?.card?.info)}> - {decount[item?.card?.info?.id] || 0}</button> 
+          <div className='text-sm'>₹{item?.card?.info?.description}</div>
+          <div className='flex space-x-2'>
+            <button
+              onClick={() => handleSubtractItem(item?.card?.info)}
+              className='bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md'
+            >
+              -
+            </button>
+            <span className='px-2 py-1'>{count[item?.card?.info?.id] || 0}</span>
+            <button
+              onClick={() => handleAddItem(item?.card?.info)}
+              className='bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-md'
+            >
+              +
+            </button>
           </div>
         </div>
       ))}
     </div>
   );
-  
-
 };
 
 export default RestaurantMenu;
