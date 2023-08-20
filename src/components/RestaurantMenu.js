@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { IMG_CDN_URL } from './Constants';
 import Shimmer from './Shimmer';
 import useRestaurant from '../Utils/useRestaurant';
-import { addItem, removeItem } from '../Utils/cartSlice';
 import { useDispatch } from 'react-redux';
+import { addItem, removeItem } from '../Utils/cartSlice.js';
 
 const RestaurantMenu = () => {
 
@@ -42,14 +42,7 @@ const RestaurantMenu = () => {
   }
 
   const totalItems = Object.values(count).reduce((total, quantity) => total + quantity,0)
-  console.log(count)
-  console.log(menuItems)
-
-  const filteredArray = Object.values(menuItems).filter(item => count[item.card.info.id] >0);
-  console.log(filteredArray + '====>')  
-
-
-
+  
   return !restaurant ? (
     <Shimmer /> 
   ) : (
