@@ -50,6 +50,7 @@ setFilteredRestaurant(restaurant_array);
        
         onClick = {()=> {
         const data = filterData(searchInput, allRestaurant)
+        console.log(allRestaurant)
         setFilteredRestaurant(data)
         } } > search
         </button>

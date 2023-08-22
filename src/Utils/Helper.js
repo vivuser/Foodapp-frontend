@@ -1,3 +1,4 @@
 export function filterData(searchInput, restaurant){
-    return restaurant.filter((restaurant)=>restaurant?.data?.name?.toLowerCase()?.includes(searchInput.toLowerCase()))
+    console.log(restaurant)
+    return restaurant.filter((restaura)=>restaura?.info?.name?.toLowerCase()?.includes(searchInput.toLowerCase()))
  }  

@@ -43,22 +43,29 @@ const RestaurantMenu = () => {
 
   const totalItems = Object.values(count).reduce((total, quantity) => total + quantity,0)
   
+  
+
+  
   return !restaurant ? (
     <Shimmer /> 
   ) : (
-    <div className='flex flex-wrap gap-4'>
-            <p>Total Items: {totalItems}</p>
+    <div className='gap-8'>
       {/* ... (restaurant info) */}
       {Object.values(menuItems).map((item, index) => (
-        <div className='w-56 p-2 shadow-lg bg-pink-50' key={index}>
-          <img src={IMG_CDN_URL + item?.card?.info?.imageId} alt={item?.card?.info?.name} />
-          <div className='font-semibold'>{item?.card?.info?.name}</div>
-          <div>₹{item?.card?.info?.price / 100}</div>
-          <div className='text-sm'>₹{item?.card?.info?.description}</div>
-          <div className='flex space-x-2'>
+        <div className='flex flex-row justify-between p-2  mt-5 shadow-lg bg-white-20' key={index}>
+        <div className='mb-2 flex flex-row'>
+        <img className='w-36 h-29' src={IMG_CDN_URL + item?.card?.info?.imageId} alt={item?.card?.info?.name} />
+        <div className='flex flex-col pl-2'>
+        <div className='font-semibold'>{item?.card?.info?.name}</div>
+        ₹{item?.card?.info?.price / 100}
+        <div className='text-sm justify-center'>{item?.card?.info?.description}</div>
+
+        </div>
+        </div>
+          <div className='flex justify-end space-x-2 h-8'>
             <button
               onClick={() => handleSubtractItem(item?.card?.info)}
-              className='bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md'
+              className='bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md ml-auto'
             >
               -
             </button>
