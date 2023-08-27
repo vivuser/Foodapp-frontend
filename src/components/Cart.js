@@ -41,9 +41,11 @@ console.log(Object.values(summarizedCart))
 //   }
 // };
 
-const handleDecrementQuantity = (itemId) => {
-  dispatch(decrementItem(itemId));
+const handleDecrementQuantity = (item) => {
+  console.log(item);
+  dispatch(decrementItem(item));
 };
+
 
 
 const handleIncrementQuantity = (itemId) => {
@@ -85,20 +87,20 @@ return (
                   </div>
                   </div>
                   <button
-                  onClick={() => handleDecrementQuantity(cartItem.item.id)}
-                  className="text-yellow-700 border border-yellow-700 rounded-full p-1"
+                  onClick={() => handleDecrementQuantity(cartItem)}
+                  className="text-yellow-700 border border-yellow-700 rounded-full p-1 bg-red-100"
                   >-</button>
                   <span className="text-lg">{cartItem.quantity}</span>
-                  <button 
+                  <button   
                   onClick={() => handleIncrementQuantity(cartItem.item.id)}
-                  className="text-yellow-700 border border-yellow-700 rounded-full p-1"
+                  className="text-yellow-700 border border-yellow-700 rounded-full p-1 bg-red-100"
                   >+</button>
-                  <div> 
-                  Total : ₹ {cartItem.item.price/100 * cartItem.quantity}
+                  <div className="font-bold"> 
+                  ₹ {cartItem.item.price/100 * cartItem.quantity}
                   </div>
                   <button
                     onClick={() => handleRemoveItem()}
-                    className="text-red-500 hover:text-red-600"
+                    className="text-black-500 hover:text-black-600 bg-pink-200 rounded-md p-2 hover:bg-red-300"
                   >
                     Remove
                   </button>
@@ -106,12 +108,14 @@ return (
             ))}
           </div>
         </div>
-        <div className="text-xl bg-brown-100 text-right">
+        <div className="text-xl bg-brown-100 text-right font-bold pr-5">
           Total: ₹ {Object.values(summarizedCart).reduce((total,cartItem)=>{
             return total + (cartItem.item.price)/100 *(cartItem.quantity);
           }, 0)}
         </div>
-        <button className="text-xl bg-brown-700 px-4 py-2 rounded-md">Checkout</button>
+        <div className="flex justify-end">
+        <button className="bg-green-300 font-bold m-5 p-3 rounded-md hover:bg-green-600">Checkout</button>
+          </div>
      </> ) : (
         <div className="text-center">
           <p className="text-lg font-semibold mb-2">Your cart is empty</p>

@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
@@ -11,7 +9,8 @@ const cartSlice = createSlice({
         addItem: (state, action)=>{
             const newItem = action.payload;
             const existingItem = state.items.find(item => item.item.id === newItem.item.id);
-
+            console.log(newItem)
+            console.log(existingItem)
             if (existingItem) {
                 existingItem.quantity += 1;
                 console.log(existingItem)
@@ -23,23 +22,15 @@ const cartSlice = createSlice({
         },
         removeItem: (state, action)=>{
             const index = action.payload
+            console.log(index)
             state.items.splice(index,1);
         },
-        // decrementItem: (state, action) => {
-        //     const itemToSubtract = action.payload
-        //     const itemToDecrement = state.items.find(item => item.item.id === itemToSubtract)
-        //     console.log(itemToDecrement)
-        //     console.log(action.payload)
-        // if (itemToDecrement && itemToDecrement.quantity > 1 ) {
-        //     itemToDecrement.quantity -= 1;
-        // }
-        // },
         decrementItem: (state, action) => {
             const itemIdToDecrement = action.payload;
-            const itemToDecrement = state.items.find(item => item.item.id === itemIdToDecrement);
-          
-            if (itemToDecrement && itemToDecrement.quantity > 1) {
-              itemToDecrement.quantity -= 1;
+           console.log(itemIdToDecrement)
+           const itemIndex = state.items.findIndex(item => item.item.id === itemIdToDecrement.item.id);
+            if (itemIdToDecrement) {  
+                state.items.splice(itemIndex, 1);
             }
           },
         clearCart: (state) =>{

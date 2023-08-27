@@ -24,7 +24,7 @@ const Login = () => {
           className='p-2 border rounded-md'
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className='p-2 bg-purple-900 text-white rounded-md'>Submit</button>
+        <button className='p-2 bg-pink-400 hover:bg-pink-500 text-white rounded-md'>Submit</button>
       </div>
       
       {/* Registration Form */}

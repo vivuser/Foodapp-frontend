@@ -14,7 +14,7 @@ const Title = () => (
 
 const Header = () => {
 
-    const [title, setTitle] = useState("FoodVilla");
+    const [title, setTitle] = useState("Food Villa");
     const [login, setLogin] = useState(false);
 
 
@@ -32,34 +32,30 @@ const Header = () => {
     <div className="flex justify-between bg-pink-50 shadow-lg">
     <Title />
 
-        <h1>{title}</h1>
-        <button onClick={()=> setTitle('Food Galaxy')}>Change Title</button>
+        <h1 className="font-bold text-3xl mt-8">{title}</h1>
 
         <div className="nav-items">
-            <ul className="flex py-10">
+            <ul className="flex py-10 mt-1 gap-3">
                 <Link to='/'>
-                <li className="px-2">Home</li>
+                <li className="px-2 font-medium">Home</li>
                 </Link>
                 <Link to="/about"> 
-                <li className="px-2">About</li>
+                <li className="px-2 font-medium">About</li>
                 </Link>
                 <Link to="/contact">
-                <li className="px-2">Contact</li>
+                <li className="px-2 font-medium">Contact</li>
                 </Link>
                 <Link to="/instamart">
-                <li className="px-2">Instamart</li>
+                <li className="px-2 font-medium">Instamart</li>
                 </Link>
                 <Link to="/cart">
-                <li className="px-2">Cart items 🛒-{cartItems.length} </li>
+                <li className="px-2 font-medium">Cart items 🛒-{cartItems.length} </li>
                 </Link>
                 <Link to="/login">
-                <li className="px-2">Login</li>
+                <li className="px-2 font-bold">Login 👨🏻‍🦲</li>
                 </Link>
             </ul>
         </div>
-
-        <h1>{user.name}</h1>
-        <button onClick={changeState}>{login ? 'login':'logout'}</button>
     </div>
     );
 };

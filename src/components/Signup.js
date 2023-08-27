@@ -37,13 +37,13 @@ const Signup = () => {
 
     return (
         <div>
-            <h1 className='font-bold text-2xl mb-4'>Register</h1>
+            <h1 className='font-bold text-2xl mb-4 pl-10 justify-center'>Register</h1>
             <div className='flex flex-col space-y-4'>
                 <input type='name' value={firstName} placeholder='first name' onChange={(e) => setFirstName(e.target.value)} className='p-2 border rounded-md'/>
                 <input type='name' value={lastName} placeholder='last name' onChange={(e) => setLastName(e.target.value)} className='p-2 border rounded-md'/>
                 <input type='email' value={email} placeholder='email' onChange={(e) => setEmail(e.target.value)} className='p-2 border rounded-md'/>
                 <input type='password' value={password} placeholder='password' onChange={(e) => setPassword(e.target.value)} className='p-2 border rounded-md'/>
-                <button className='p-2 bg-purple-900 text-white rounded-md' onClick={handleSubmit}>Submit</button>
+                <button className='p-2 bg-pink-400 hover:bg-pink-500 text-white rounded-md' onClick={handleSubmit}>Submit</button>
             </div>
         </div>
     );

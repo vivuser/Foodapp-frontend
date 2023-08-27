@@ -10,7 +10,7 @@ export const RestaurantCard =({name, cuisines , cloudinaryImageId, totalRatingsS
 
     const { user } = useContext(UserContext)
     return (
-         <div className="w-56 p-2 m-2 shadow-lg bg-pink-50 justify-between rounded-lg">
+         <div className="w-56 p-2 m-2 shadow-lg bg-pink-50 justify-between rounded-lg hover:translate-x-2 transition-transform  ">
              <img className="w-56 h-40 object-cover rounded-lg" alt="image" 
              src= {IMG_CDN_URL + cloudinaryImageId} />
             <div className="flex flex-col h-full justify-between">
