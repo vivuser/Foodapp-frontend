@@ -1,9 +1,35 @@
 import React, { useState } from 'react';
 import Signup from './Signup';
+import axios from 'axios';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({
+    email:"",
+    password:""
+  })
+
+  const handleChange = e =>{
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value
+    })
+  }
+
+  const handleSubmit =async(e)=> {
+    e.preventDefault();
+    try{
+      const loginData = await axios.post("http://localhost:8080/login", {...form},
+      {
+        headers: {
+            Authorization:  `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
+        }
+        })
+    }
+    catch (error) {
+      console.error('Error:', error);
+  }
+}
 
   return (
     <div className='flex items-center justify-center min-h-screen'>
@@ -12,19 +38,20 @@ const Login = () => {
         <h1 className='font-bold text-2xl mb-4'>Login</h1>
         <input
           type='email'
-          value={email}
+          name='email'
           placeholder='Email'
           className='p-2 border rounded-md'
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
         />
         <input
           type='password'
-          value={password}
+          name='password'
           placeholder='Password'
           className='p-2 border rounded-md'
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
         />
-        <button className='p-2 bg-pink-400 hover:bg-pink-500 text-white rounded-md'>Submit</button>
+        <button className='p-2 bg-pink-400 hover:bg-pink-500 text-white rounded-md'
+        onClick={handleSubmit}>Submit</button>
       </div>
       
       {/* Registration Form */}

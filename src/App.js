@@ -16,6 +16,7 @@ import { Provider } from "react-redux";
 import store from "./Utils/store";
 import Cart from "./components/Cart";
 import Login from "./components/Login";
+import Search from "./components/Search";
  const AppLayout = () => {
 
     const [user, setUser] = useState({
@@ -54,6 +55,10 @@ export const appRouter = createBrowserRouter([
                 name: "Namaste React",
                 email: "support@Namastedev.com",
             }}/>
+            },
+            {
+                path: '/search',
+                element:<Search/>
             },
             {
                 path: '/about',

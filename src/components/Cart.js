@@ -114,7 +114,9 @@ return (
           }, 0)}
         </div>
         <div className="flex justify-end">
-        <button className="bg-green-300 font-bold m-5 p-3 rounded-md hover:bg-green-600">Checkout</button>
+        <button className="bg-green-300 font-bold m-5 p-3 rounded-md hover:bg-green-600"
+        
+        >Checkout</button>
           </div>
      </> ) : (
         <div className="text-center">

@@ -2,6 +2,14 @@
   text-align: center;
 }
 
+
+/* tailwind.css or App.css */
+.font-serif-bold {
+  font-family: serif;
+  font-weight: 500;
+}
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
