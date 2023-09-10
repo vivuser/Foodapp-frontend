@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IMG_CDN_URL } from "./Constants";
 import React from "react";
+import axios from "axios";
 import { decrementItem , addItem, removeItem, clearCart} from "../Utils/cartSlice.js";
 
 const Cart = () => {
@@ -56,6 +57,34 @@ const handleIncrementQuantity = (itemId) => {
   console.log(dispatch(addItem(itemToUpdate)));
   }
 };
+
+const cartInfo = {
+  "userId": "5f63f16f50c982001c268ac7",
+  "products": [
+    {
+      "productId": "5f63f16f50c982001c268ac8",
+      "quantity": 2
+    }
+  ],
+  "totalPrice": 255
+}
+
+
+const handleSubmitInfo = async(e) =>{
+  e.preventDefault();
+  try{
+    const placeOrder = await axios.post("http://localhost:8080/submitCart",{...cartInfo},
+    {
+      headers:{
+        Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
+      }
+    })
+  }
+  catch(error) {
+    console.log('Error:', error);
+  }
+  }
+
 
 return (
     <div className="p-4">
@@ -116,7 +145,7 @@ return (
         </div>
         <div className="flex justify-end">
         <button className="bg-green-300 font-bold m-5 p-3 rounded-md hover:bg-green-600"
-        
+        onClick={handleSubmitInfo}
         >Checkout</button>
           </div>
      </> ) : (

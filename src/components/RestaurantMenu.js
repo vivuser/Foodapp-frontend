@@ -8,6 +8,9 @@ import { addItem, decrementItem, removeItem } from '../Utils/cartSlice.js';
 import { filterMenu } from '../Utils/searchMenu';
 import  veg  from '../Utils/vegImage.png'
 import  nonVeg  from '../Utils/nonVeg.png'
+import { MdSearch } from 'react-icons/md';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 
 const RestaurantMenu = () => {
@@ -27,7 +30,7 @@ const RestaurantMenu = () => {
   const [showVeg, setShowVeg] = useState(false)
   const [category, setCategory] = useState([])
   const [show, setShow] = useState(true)
-  
+  const [isAdded, setIsAdded] = useState({})
 
 
   useEffect(() => {
@@ -114,6 +117,14 @@ const RestaurantMenu = () => {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   }
 
+  const handleAddToCart = (item) => {
+    const updatedIsAdded = {...isAdded};
+    updatedIsAdded[item.id] = true;
+    console.log(item)
+    setIsAdded(updatedIsAdded)
+    dispatch(addItem({item}))
+  }
+
   const handleSubtractItem = (item) =>{
     if (count[item.id] > 0) {
     dispatch(decrementItem ({item}))
@@ -166,13 +177,13 @@ console.log(allEvery)
       <div>
         <input className='ml-5 pl-2' type='text' placeholder='search menu' value={searchMenu}
         onChange={(e)=> {setSearchMenu(e.target.value)}} />
-        <button className='bg-yellow-300 rounded-lg pl-2 pr-2 m-2'
+        <MdSearch size={30} color="gray"
         onClick={()=>{
           const data = filterMenu(searchMenu, menuItems)
           console.log(data)
           setFilteredMenu(data)
         }}
-        >Search</button>
+        />
            <button   className={`ml-4 px-2 py-1 rounded-md ${
     showVeg ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'
   }`} onClick={handleVegToggle}>
@@ -185,24 +196,109 @@ console.log(allEvery)
         <option value="default">Default Sort</option>
         </select>
         </div>
+        <div className='flex flex-row mt-2 max-w-5xl mx-auto'>
+        <div className='pl-10'>
+      <div className='font-bold'>{restaurantName.name}</div>
+      <div className='font-serif'>{restaurantName.cuisines.join()}</div>
+      <div className='font-serif'>{restaurantName.city}</div>
       </div>
-      {
-  !all ? (
+        <div className='ml-auto pr-10'>
+        <div>{restaurantName.avgRating}<FontAwesomeIcon color='gray' icon={faStar} /></div>
+        <div>{restaurantName.totalRatingsString}</div>
+      <div className='font-bold'>{restaurantName.costForTwoMessage}</div>
+        </div>
+      </div>
+      <hr className='border-dashed border-gray-400 m-8'></hr>
+      </div>
+
+
+
+
+      {!all ? (
+    <Shimmer />
+  ) : (
+    all.map((item, index) => (
+  <div key={index} className='font-bold pl-10 pr-10'>
+  {item?.categories ?
+  <button id={index}
+      className='font-bold text-left h-10 bg-gray-200 ml-14 mr-11 mt-5 p-2 relative select-none flex space-between' onClick={changeShowState}>{item?.title} ▼
+      </button> : null} 
+    { 
+      item?.categories?.map((subItem, subIndex) => (
+      subItem?.itemCards?.map((tubItem, tubIndex) => (<>
+        {tubItem?.card?.info?.imageId ?
+        <div key={tubIndex}>
+        <div className='relative flex flex-row justify-between p-7 tubItem max-w-5xl mx-auto'>
+        <div className='flex flex-col'>
+        <div key={tubIndex} className='font-medium'>{tubItem?.card?.info?.name}</div>
+        {tubItem?.card?.info?.price ? 
+          <div key={tubIndex} className='font-medium'>₹{tubItem?.card?.info?.price/100}</div>:
+        <div key={tubIndex} className='font-medium'>₹{tubItem?.card?.info?.variantsV2.pricingModels[0].price/100}</div>
+        }
+        <div key={tubIndex} className='font-thin font-serif text-sm'>{tubItem?.card?.info?.description}</div>
+        </div>
+
+        <div key={tubIndex} className='absolute bottom-5 right-10'>
+        {isAdded[tubItem.card.info.id] ? (
+          <div>
+          <button className='text-green-600 pl-4 pr-2 border rounded-1-md h-8 justify-end bg-white text-md'
+          onClick={() => handleSubtractItem(tubItem.card.info)}
+          >
+          -
+          </button>
+          <span className='border-t border-b bg-white p-1 text-md text-green-600' >
+            {count[tubItem.card.info.id] || 1}
+          </span>
+          <button 
+          className='text-green-600 pl-4 pr-2 border rounded-1-md h-8 justify-end bg-white text-md'
+          onClick={() => handleAddItem(tubItem.card.info)}
+          >+
+          </button>
+          </div>
+        ) : (
+          <button 
+          className='text-green-600 pl-4 pr-6 mr-2 p-2 border rounded-md h-10 justify-end bg-white text-xs'
+          onClick={() => handleAddToCart(tubItem.card.info)}
+          >ADD</button>
+        )
+        }
+         </div>
+
+
+
+
+        <img className="w-28 h-28 ml-5" src ={IMG_CDN_URL + tubItem?.card?.info?.imageId}></img>
+        </div>
+        <hr className='border-t-2 border-gray-200 ml-10 mr-10'></hr>
+        </div>
+         : null
+        }
+      </>))))}
+  </div>)))}
+{/* {
+all ? (
     <Shimmer />
   ) : (
     all.map((item, index) => (
   <div key={index} className='font-bold'>
-    {item?.title}
-    {item?.categories?.map((subItem, subIndex) => (
-      subItem?.itemCards?.map((tubItem, tubIndex) => (
-        <div key={tubIndex} className='font-thin'>{tubItem?.card?.info?.name}</div>
-      ))
+        <button id={index}
+      className='font-bold text-left w-full h-10 bg-gray-200 ml-14 mr-11 mt-5 p-2 relative select-none flex space-between' onClick={changeShowState}>{item?.title} ▼
+      </button>
+    {show && item?.categories?.map((subItem, subIndex) => (
+      subItem?.itemCards?.map((tubItem, tubIndex) => (<>
+      <div className='flex flex-row justify-between p-10 m-10 tubItem '>
+        <div key={tubIndex} className='font-normal'>{tubItem?.card?.info?.name}</div>
+        <img className="w-28 h-28" src ={IMG_CDN_URL + tubItem?.card?.info?.imageId}></img>
+        </div>
+        <hr></hr>
+      </>))
     ))}
   </div>
 ))
-
   )
-}
+} */}
+
+
 
 
       <div className='pl-12 bg-gray-100 rounded-md p-4 m-8'>
