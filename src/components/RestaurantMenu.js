@@ -11,6 +11,7 @@ import  nonVeg  from '../Utils/nonVeg.png'
 import { MdSearch } from 'react-icons/md';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 
 const RestaurantMenu = () => {
@@ -31,6 +32,14 @@ const RestaurantMenu = () => {
   const [category, setCategory] = useState([])
   const [show, setShow] = useState(true)
   const [isAdded, setIsAdded] = useState({})
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cartItem, setCartItem] = useState([])
+  
+
+
+  const openModal = () => {
+    setIsModalOpen(true)
+  };
 
 
   useEffect(() => {
@@ -89,6 +98,7 @@ const RestaurantMenu = () => {
       }
   }
 
+    const totality = cartItems.reduce((total, item) => total + item.item.price/100,0)
 
   useEffect(() =>{
     const data = filterMenu(searchMenu, menuItems)
@@ -122,6 +132,9 @@ const RestaurantMenu = () => {
     updatedIsAdded[item.id] = true;
     console.log(item)
     setIsAdded(updatedIsAdded)
+    openModal()
+    const updatedCartItems = [...cartItem, item]
+    setCartItem(updatedCartItems)
     dispatch(addItem({item}))
   }
 
@@ -166,8 +179,11 @@ every.map(item =>{
 
 console.log(allEvery)
 
+console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
+
   // console.log(filteredMenu)
   // console.log(menuItems)
+ 
   
   return !restaurant ? (
     <Shimmer /> 
@@ -208,10 +224,24 @@ console.log(allEvery)
       <div className='font-bold'>{restaurantName.costForTwoMessage}</div>
         </div>
       </div>
-      <hr className='border-dashed border-gray-400 m-8'></hr>
+      <hr className='border-dashed border-gray-400 m-10 pl-20'></hr>
       </div>
 
+    
 
+      {
+    isModalOpen && 
+    (
+      <div className="fixed inset-0 flex items-end justify-center z-50 pointer-events-none">
+        <div className="modal h-10 w-1/2 absolute bottom-0 bg-green-500 transform translate-y-0 transition-transform ease-in-out duration-300">
+          <div className="p-2 text-white flex justify-between pointer-events-auto">
+          <p className='pt-1 font-bold'>{cartItems.length} Items | ₹{totality}</p>
+            <h2 className="text-lg font-arial font-bold mb-4 pl-3 pt-0.5 text-right">View Cart</h2>
+          </div>
+        </div>
+      </div>
+    )    
+  }
 
 
       {!all ? (
@@ -235,7 +265,7 @@ console.log(allEvery)
           <div key={tubIndex} className='font-medium'>₹{tubItem?.card?.info?.price/100}</div>:
         <div key={tubIndex} className='font-medium'>₹{tubItem?.card?.info?.variantsV2.pricingModels[0].price/100}</div>
         }
-        <div key={tubIndex} className='font-thin font-serif text-sm'>{tubItem?.card?.info?.description}</div>
+        <div key={tubIndex} className='font-thin font-serif text-sm text-gray-600'>{tubItem?.card?.info?.description}</div>
         </div>
 
         <div key={tubIndex} className='absolute bottom-5 right-10'>
@@ -263,60 +293,18 @@ console.log(allEvery)
         )
         }
          </div>
-
-
-
-
         <img className="w-28 h-28 ml-5" src ={IMG_CDN_URL + tubItem?.card?.info?.imageId}></img>
         </div>
-        <hr className='border-t-2 border-gray-200 ml-10 mr-10'></hr>
+        <hr className='border-t-2 max-w-1/2 border-gray-200'></hr>
         </div>
          : null
         }
       </>))))}
   </div>)))}
-{/* {
-all ? (
-    <Shimmer />
-  ) : (
-    all.map((item, index) => (
-  <div key={index} className='font-bold'>
-        <button id={index}
-      className='font-bold text-left w-full h-10 bg-gray-200 ml-14 mr-11 mt-5 p-2 relative select-none flex space-between' onClick={changeShowState}>{item?.title} ▼
-      </button>
-    {show && item?.categories?.map((subItem, subIndex) => (
-      subItem?.itemCards?.map((tubItem, tubIndex) => (<>
-      <div className='flex flex-row justify-between p-10 m-10 tubItem '>
-        <div key={tubIndex} className='font-normal'>{tubItem?.card?.info?.name}</div>
-        <img className="w-28 h-28" src ={IMG_CDN_URL + tubItem?.card?.info?.imageId}></img>
-        </div>
-        <hr></hr>
-      </>))
-    ))}
-  </div>
-))
-  )
-} */}
-
-
 
 
       <div className='pl-12 bg-gray-100 rounded-md p-4 m-8'>
 
-      {/* {
-      all.map((item, index)=> {
-       <div className='font-bold'>{item.title}</div>
-
-       item.itemCards?.map((subitem, index)=> {
-          <div>{subitem?.card?.info?.name}kkkkkkkk</div>
-        })
-
-      })
-        } */}
-      {/* {
-      allEvery.map((item, index)=> (
-       <div>{item}</div>
-      ))} */}
       <div>
         <img className='w-56 h-40' src = {IMG_CDN_URL+ restaurantName.cloudinaryImageId} alt={restaurantName.name} />
       </div>
