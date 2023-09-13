@@ -16,8 +16,8 @@ export const RestaurantCard =({name, cuisines , cloudinaryImageId, totalRatingsS
             <div className="flex flex-col h-full justify-between">
             <div>
              <h2 className="font-sans font-semibold text-lg pb-2">{name.length > 17 ? `${name.slice(0,17)}...`: name}</h2>
-             <h6 className="text-sm">{cuisines.join().length > 25 ? `${cuisines.join().slice(0,25)}...`: cuisines}</h6>
-             <h5 className="font-serif text-sm">Total Ratings: {totalRatingsString}</h5>
+             <h6 className="text-sm text-gray-800">{cuisines.join().length > 25 ? `${cuisines.join().slice(0,25)}...`: cuisines}</h6>
+             <h5 className="font-serif text-sm text-gray-800">Total Ratings: {totalRatingsString}</h5>
             </div>
          </div>
          </div>

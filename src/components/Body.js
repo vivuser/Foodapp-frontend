@@ -81,12 +81,14 @@
 
         return (!allRestaurant) ? <Bhimmer/>: (
             <>
-            <div className="justify-between">
+             <div className="justify-items">
+                <div className="font-serif font-semibold text-2xl pl-10 mt-10 mb-5 text-left">Best offers for you</div>
+                </div>
+            <div className="justify-between flex flex-col items-center">
             <div className="flex flex-wrap justify-between">
-            <div className="font-serif font-semibold text-2xl pl-10 mt-10 mb-5">Best offers for you</div>
-            <div className="flex pr-2 pt-8">
-                <button onClick={goToPreviousOffer} className="w-10 h-10 carousel-button next-button rounded-full flex items-center justify-center bg-green-200">&#10094;</button>
-                <button onClick={goToNextOffer} className="w-10 h-10 carousel-button next-button rounded-full flex items-center justify-center bg-green-200">&#10095;</button>
+            <div className="flex pr-2 pt-4">
+           <div className="flex">
+            <button onClick={goToPreviousOffer} className="carousel-button prev-button rounded-full flex items-center justify-center">&#10094;</button>
                 </div>
                 <div className="w-86 h-56 gap-5 flex flex-horizontal justify-center">
                 {
@@ -99,6 +101,8 @@
                 }
                 </div>
                 </div>
+            <button onClick={goToNextOffer} className="carousel-button next-button">&#10095;</button>
+              </div>
                 </div>
 
             <div className="font-serif font-semibold text-2xl pl-10 mt-10">What's on your mind?</div>
