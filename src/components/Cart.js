@@ -24,7 +24,6 @@ const Cart = () => {
   };
 
 
-
 console.log(cartItems)
 const summarizedCart = {}
 
@@ -61,14 +60,7 @@ const handleIncrementQuantity = (itemId) => {
 };
 
 const cartInfo = {
-  "userId": "5f63f16f50c982001c268ac7",
-  "products": [
-    {
-      "productId": "5f63f16f50c982001c268ac8",
-      "quantity": 2
-    }
-  ],
-  "totalPrice": 255
+  "orderData": {cartItems}
 }
 
 
@@ -168,11 +160,19 @@ return (<>
           }, 0)}
         </div>
         </div>
+      
         <div className="flex justify-end">
+        
         <button className="bg-green-300 font-bold m-5 p-3 rounded-md hover:bg-green-600"
         onClick={handleSubmitInfo}
-        >Checkout</button>
-          </div>
+        >
+          <Link to="/orderStatus">
+          Checkout
+          </Link>
+          </button>  
+          </div>        
+       
+    
      </> ) : (
         <div className="text-center">
           <p className="text-lg font-semibold mb-2">Your cart is empty</p>

@@ -17,6 +17,7 @@ import store from "./Utils/store";
 import Cart from "./components/Cart";
 import Login from "./components/Login";
 import Search from "./components/Search";
+import OrderStatus from "./components/OrderStatus";
  const AppLayout = () => {
 
     const [user, setUser] = useState({
@@ -83,6 +84,10 @@ export const appRouter = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login/>
+            },
+            {
+                path: '/orderStatus',
+                element: <OrderStatus />
             }
         ]
     }
