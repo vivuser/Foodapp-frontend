@@ -11,8 +11,8 @@ import  nonVeg  from '../Utils/nonVeg.png'
 import { MdSearch } from 'react-icons/md';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom/dist/umd/react-router-dom.development';
 
 const RestaurantMenu = () => {
 
@@ -236,7 +236,12 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
         <div className="modal h-10 w-1/2 absolute bottom-0 bg-green-500 transform translate-y-0 transition-transform ease-in-out duration-300">
           <div className="p-2 text-white flex justify-between pointer-events-auto">
           <p className='pt-1 font-bold'>{cartItems.length} Items | ₹{totality}</p>
-            <h2 className="text-lg font-arial font-bold mb-4 pl-3 pt-0.5 text-right">View Cart</h2>
+            <Link to="/cart">
+            <div className='flex'>
+            <h2 className="text-lg font-arial font-bold mb-4 pl-3 pr-3 pt-0.5 text-right">View Cart</h2>
+            <FontAwesomeIcon icon={faShoppingBag} size="2x" />
+            </div>
+            </Link>
           </div>
         </div>
       </div>

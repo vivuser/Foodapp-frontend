@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const OrderStatus = () => {
     const [orderStatus, setOrderStatus] = useState(null);
-    const orderId = 123;
+    const orderId = "6506dd85d379670de4858e24" ;
 
     useEffect(() => {
         getOrderStatus(orderId);
@@ -11,7 +11,12 @@ const OrderStatus = () => {
 
     async function getOrderStatus(orderId){
         try{
-        const response = await fetch("http://localhost:8080/order-status/${orderId}")
+        const response = await fetch(`http://localhost:8080/order-status/${orderId}`,
+        {
+            headers:{
+              Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
+            }
+        })
         if (!response.ok){
             throw new Error('Network response was not ok');
         }
