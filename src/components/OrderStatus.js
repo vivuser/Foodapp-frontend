@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const OrderStatus = () => {
     const [orderStatus, setOrderStatus] = useState(null);
-    const orderId = "6506dd85d379670de4858e24" ;
+    const { dbId } = useParams();
 
     useEffect(() => {
-        getOrderStatus(orderId);
-    },[orderId])
+        getOrderStatus(dbId);
 
 
-    async function getOrderStatus(orderId){
+    },[dbId])
+
+    console.log(dbId, 'ooooo')
+
+
+    async function getOrderStatus(dbId){
         try{
-        const response = await fetch(`http://localhost:8080/order-status/${orderId}`,
+        const response = await fetch(`http://localhost:8080/order-status/${dbId}`,
         {
             headers:{
               Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
@@ -21,8 +26,8 @@ const OrderStatus = () => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setOrderStatus(data.status);
-        console.log('Order status: ', data.status);
+        setOrderStatus(data);
+        console.log('Order status: ', orderStatus.status);
     }   catch (error) {
         console.error('Error fetching order status:', error);
     }
@@ -32,7 +37,16 @@ const OrderStatus = () => {
   return (
         <div>
             {orderStatus !== null? (
-                <p>Order status: {orderStatus}</p>
+                <div className='justify-content text-center m-10'>
+                <p className='font-bold bg-green-200 w-80 p-4 m-4'>Order status: {orderStatus.status}</p>
+                <p className='text-lg font-serif font-bold'>Ordered Items</p>
+                <ul className='font-serif font-sm'>
+                {orderStatus.order.map((item, index)=>(
+                   <li key={index} className='text-left'>
+                    <span className='mr-8'>{item.item.name}</span> ₹{item.item.price/100}</li>
+                ))}
+                </ul>
+                </div>
             ) : (
                 <p>Loading</p>
             )}

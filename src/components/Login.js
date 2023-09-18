@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <div className='flex items-center justify-center min-h-screen'>
       {/* Login Form */}
-      <div className='flex flex-col items-center justify-center space-y-4 w-1/2'>
+      <div className='flex flex-col items-center justify-center space-y-4'>
         <h1 className='font-bold text-2xl mb-4'>Login</h1>
         <input
           type='email'
@@ -57,7 +57,7 @@ const Login = () => {
       
       {/* Registration Form */}
       <div className='flex flex-col items-center justify-center space-y-4 w-1/2'>
-        <Signup />
+        {/* <Signup /> */}
       </div>
     </div>
   );

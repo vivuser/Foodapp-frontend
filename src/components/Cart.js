@@ -1,18 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigation } from "react-router-dom";
 import { IMG_CDN_URL } from "./Constants";
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { decrementItem , addItem, removeItem, clearCart} from "../Utils/cartSlice.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import LoginOnCheckout from "./LoginOnCheckout";
+
 
 const Cart = () => {
 
 
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cart.items);
+
+  const[login, setLogin] = useState(false)
+
+  const openLogin = () =>{
+      setLogin(!login);
+  }
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -64,6 +73,9 @@ const cartInfo = {
 }
 
 
+const navigation = useNavigate();
+
+
 const handleSubmitInfo = async(e) =>{
   e.preventDefault();
   try{
@@ -73,11 +85,19 @@ const handleSubmitInfo = async(e) =>{
         Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
       }
     })
+    const responseData = placeOrder.data;
+    const dbId = responseData.order._id
+    console.log('ResponseData', dbId)
+
+
+
+    navigation(`/orderStatus/${dbId}`);
   }
   catch(error) {
     console.log('Error:', error);
   }
   }
+
 
 
 return (<>
@@ -92,7 +112,8 @@ return (<>
      <div className="w-1/2">
     <div className="text-gray-600 pl-9">To place your order now, log in to your existing account or sign up.</div>
     <div className="flex pb-2 pt-8">
-    <div className="text-center p-2 ml-8 mt-2 w-40 text-sm border border-solid border-green-500 text-green-600 font-bold">Have an Account?<br/>LOGIN</div>
+    <div className="text-center p-2 ml-8 mt-2 w-40 text-sm border border-solid border-green-500 text-green-600 font-bold" onClick={openLogin}>Have an Account?<br/>LOGIN</div>
+    <LoginOnCheckout openLogin={login}/>
     <div className="p-2 text-center font-semibold text-sm ml-8 mt-2 w-40 bg-green-600 text-white border border-solid border-green-500">New to Foodvilla?<br/>SIGN UP</div>
    </div>
    </div>

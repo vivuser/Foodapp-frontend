@@ -86,7 +86,7 @@ export const appRouter = createBrowserRouter([
                 element: <Login/>
             },
             {
-                path: '/orderStatus',
+                path: '/orderStatus/:dbId',
                 element: <OrderStatus />
             }
         ]

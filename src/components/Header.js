@@ -7,6 +7,7 @@ import '../App.css'
 import { MdSearch } from "react-icons/md";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
+import SideDrawer from "./SideDrawer";
 
 
 const Title = () => (
@@ -21,6 +22,15 @@ const Header = () => {
 
     const [title, setTitle] = useState("Food Villa");
     const [login, setLogin] = useState(false);
+    const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
+
+    const openSideDrawer = () => {
+        setIsSideDrawerOpen(true);
+    }
+
+    const closeSideDrawer = () => {
+        setIsSideDrawerOpen(false)
+    }
 
 
     const {user} = useContext(UserContext)
@@ -62,7 +72,10 @@ const Header = () => {
                 className="ml-1 text-2xl text-gray-600"/>
                 <span className="text-red-500">{cartItems.length}</span>
                 </Link>
-
+                <button onClick={openSideDrawer}>
+                    press
+                </button>
+                <SideDrawer isOpen={isSideDrawerOpen} onClose={closeSideDrawer} />
                 <Link to="/login">
                         <FontAwesomeIcon
                             icon={faUser} // Use the user icon here
