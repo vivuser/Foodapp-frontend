@@ -1,27 +1,25 @@
+import React, { useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useNavigation } from "react-router-dom";
 import { IMG_CDN_URL } from "./Constants";
-import React, { useState } from "react";
 import axios from "axios";
 import { decrementItem , addItem, removeItem, clearCart} from "../Utils/cartSlice.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import LoginOnCheckout from "./LoginOnCheckout";
+import SignUpOnCheckout from "./SignUpOnCheckout";
+import '../index.css';
 
 
 const Cart = () => {
 
-
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isSignUpModalOpen, setSignUpModalOpen] = useState(false)
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cart.items);
-
-  const[login, setLogin] = useState(false)
-
-  const openLogin = () =>{
-      setLogin(!login);
-  }
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -104,7 +102,7 @@ return (<>
 <div >
   <div className="flex bg-gray-100 justify-center">
   <div className="w-1/2 bg-gray-100">
-  <div className="bg-white h-56 m-10">
+  <div className= {`${isSignUpModalOpen? 'bg-white h-custom m-10': 'bg-white h-80 m-10'}`}>
       <div className="flex justify-between">
       <div className="font-bold m-5 mb-3 pl-6">Account</div>
   </div>
@@ -112,10 +110,29 @@ return (<>
      <div className="w-1/2">
     <div className="text-gray-600 pl-9">To place your order now, log in to your existing account or sign up.</div>
     <div className="flex pb-2 pt-8">
-    <div className="text-center p-2 ml-8 mt-2 w-40 text-sm border border-solid border-green-500 text-green-600 font-bold" onClick={openLogin}>Have an Account?<br/>LOGIN</div>
-    <LoginOnCheckout openLogin={login}/>
-    <div className="p-2 text-center font-semibold text-sm ml-8 mt-2 w-40 bg-green-600 text-white border border-solid border-green-500">New to Foodvilla?<br/>SIGN UP</div>
+    {!isLoginModalOpen && !isSignUpModalOpen &&
+    <div className="text-center p-2 ml-8 mt-2 w-40 text-sm border border-solid border-green-500 text-green-600 font-bold" 
+    onClick={() =>setLoginModalOpen(true)}
+    >
+    <div>
+    Have an Account?<br/>LOGIN</div>
+    </div>
+    }
+  {!isLoginModalOpen && !isSignUpModalOpen &&
+    <div className="p-2 text-center font-semibold text-sm ml-8 mt-2 w-40 bg-green-600 text-white border border-solid border-green-500"
+    onClick={() => setSignUpModalOpen(true)}
+    >
+    New to Foodvilla?<br/>SIGN UP</div>
+  } 
    </div>
+ 
+   <div>
+    {isLoginModalOpen && <LoginOnCheckout />}
+    </div>
+    <div>
+      {isSignUpModalOpen && <SignUpOnCheckout/>}
+    </div>
+
    </div>
    <div className="w-1/2 flex justify-center items-center">
    <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_147,h_140/Image-login_btpq7r" />
