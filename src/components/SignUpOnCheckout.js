@@ -1,13 +1,36 @@
 import React, { useState } from 'react'
 import LoginOnCheckout from './LoginOnCheckout'
+import axios from 'axios';
 
 const SignUpOnCheckout = () => {
+  const [name, setName] = useState([])
+  const [email, setEmail] = useState([])
+  const [phone, setPhone] = useState([])
 
   const [isSignInOpen, setIsSignInOpen] = useState(false)
     
   const openSignIn = () =>{
       setIsSignInOpen(true)
   }
+
+  const handleContinue = async(e) => {
+    e.preventDefault();
+    try {
+        const otpStatus = await axios.post('http://localhost:8080/signupOnCheckout', {
+          name,
+          email,
+          phone
+        },
+        {
+          headers: {
+              Authorization:  `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
+          }
+       })
+    }
+    catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
 
   return  ( 
@@ -20,7 +43,7 @@ const SignUpOnCheckout = () => {
             <label htmlFor="phone" className="block text-xs text-gray-500 p-1">
             Phone Number
             </label>
-            <input type="tel" id="phone" name="phone" style={{ outline: 'none' }} />
+            <input type="tel" id="phone" name="phone" style={{ outline: 'none' }} value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
           
 
@@ -28,7 +51,7 @@ const SignUpOnCheckout = () => {
             <label htmlFor="phone" className="block text-xs text-gray-500 p-1">
             Name
             </label>
-            <input type="tel" id="phone" name="phone" style={{ outline: 'none' }} />
+            <input type="tel" id="phone" name="phone" style={{ outline: 'none' }}  value={name} onChange={(e) => setName(e.target.value)}/>
             </div>
            
 
@@ -36,10 +59,10 @@ const SignUpOnCheckout = () => {
             <label htmlFor="phone" className="block text-xs text-gray-500 p-1">
             Email
             </label>
-            <input type="tel" id="phone" name="phone" style={{ outline: 'none' }} />
+            <input type="tel" id="phone" name="phone" style={{ outline: 'none' }} value={email} onChange={(e) => setEmail(e.target.value)}/>
            
             </div>
-            <button className="bg-green-400 m-3 ml-8 pr-8 pl-8 h-12 w-80 font-bold text-sm">Continue</button>
+            <button className="bg-green-400 m-3 ml-8 pr-8 pl-8 h-12 w-80 font-bold text-sm" onClick={handleContinue}>Continue</button>
             
             </div>
             )
