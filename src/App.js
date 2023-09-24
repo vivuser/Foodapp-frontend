@@ -18,12 +18,16 @@ import Cart from "./components/Cart";
 import Login from "./components/Login";
 import Search from "./components/Search";
 import OrderStatus from "./components/OrderStatus";
+import PasswordReset from "./components/PasswordReset";
+
  const AppLayout = () => {
 
     const [user, setUser] = useState({
         name: "Namaste React",
         email: "support@Namastedev.com",
     })
+
+
 
     // useEffect(()=>{
     //     //authenticate user
@@ -88,6 +92,10 @@ export const appRouter = createBrowserRouter([
             {
                 path: '/orderStatus/:dbId',
                 element: <OrderStatus />
+            },
+            {
+                path: '/reset-password/:resTok',
+                element: <PasswordReset/>
             }
         ]
     }

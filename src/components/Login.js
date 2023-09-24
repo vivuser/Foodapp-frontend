@@ -3,10 +3,17 @@ import Signup from './Signup';
 import axios from 'axios';
 
 const Login = () => {
+  const [isForgotPasswordClick, setIsForgotPasswordClick] = useState(false)
+  const [email, setEmail] = useState("")
+
   const [form, setForm] = useState({
     email:"",
     password:""
   })
+
+  const passwordClick = () => {
+    setIsForgotPasswordClick(true)
+  }
 
   const handleChange = e =>{
     const { name, value } = e.target;
@@ -32,10 +39,28 @@ const Login = () => {
   }
 }
 
+const handleForgotPassword = async(e) => {
+  e.preventDefault();
+  try{
+    const forgotPasswordData = await axios.post("http://localhost:8080/forgot-password", {
+    email
+    },
+    {
+      headers: {
+        Authorization:`Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
   return (
+    
     <div className='flex items-center justify-center min-h-screen'>
-      {/* Login Form */}
       <div className='flex flex-col items-center justify-center space-y-4'>
+        {!isForgotPasswordClick && 
+        (<div className='flex flex-col items-center justify-center space-y-4'>
         <h1 className='font-bold text-2xl mb-4'>Login</h1>
         <input
           type='email'
@@ -51,8 +76,27 @@ const Login = () => {
           className='p-2 border rounded-md'
           onChange={handleChange}
         />
+        <p className='text-orange-400' onClick={passwordClick}>forgot password?</p>
         <button className='p-2 bg-pink-400 hover:bg-pink-500 text-white rounded-md'
         onClick={handleSubmit}>Submit</button>
+        </div>
+        )}
+        {isForgotPasswordClick &&
+          <div className='flex flex-col items-center justify-center space-y-4'>
+          <input
+          type='email'
+          name='email'
+          placeholder='Email'
+          className='p-2 border rounded-md'
+          onChange={(e) => {setEmail(e.target.value)}}
+         
+        />
+         <button className='p-2 bg-pink-400 hover:bg-pink-500 text-white rounded-md'
+        onClick={handleForgotPassword}>Submit</button>
+          </div>
+        }
+        
+       
       </div>
       
       {/* Registration Form */}
