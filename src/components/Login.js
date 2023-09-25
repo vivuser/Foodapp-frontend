@@ -57,8 +57,8 @@ const handleForgotPassword = async(e) => {
 
   return (
     
-    <div className='flex items-center justify-center min-h-screen'>
-      <div className='flex flex-col items-center justify-center space-y-4'>
+    <div>
+      <div className='flex flex-col items-center justify-center'>
         {!isForgotPasswordClick && 
         (<div className='flex flex-col items-center justify-center space-y-4'>
         <h1 className='font-bold text-2xl mb-4'>Login</h1>

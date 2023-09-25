@@ -30,11 +30,12 @@ const RestaurantMenu = () => {
   const [sortOrder, setSortOrder] = useState('default')
   const [showVeg, setShowVeg] = useState(false)
   const [category, setCategory] = useState([])
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   const [isAdded, setIsAdded] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartItem, setCartItem] = useState([])
-  
+  const [selectedItemId, setSelectedItemId] = useState(null);
+
 
 
   const openModal = () => {
@@ -56,8 +57,9 @@ const RestaurantMenu = () => {
     setCount(initialCount);
   },[])
 
-  const changeShowState = () =>{
-    setShow(!show);
+  const changeShowState = (id) =>{
+    setShow((prevShow) => !prevShow);
+    setSelectedItemId(id);
   }
 
   const handleVegToggle = () => {
@@ -153,9 +155,9 @@ const RestaurantMenu = () => {
     
   {if(wholeData) {
   wholeData.map((item) => (
-        boilerCart.push(item.card.card)
+        boilerCart.push(item.card.card
   ))
-  }}
+  )}}
   console.log(wholeData)
   console.log(boilerCart)
   
@@ -180,9 +182,6 @@ every.map(item =>{
 console.log(allEvery)
 
 console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
-
-  // console.log(filteredMenu)
-  // console.log(menuItems)
  
   
   return !restaurant ? (
@@ -253,12 +252,14 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
     <Shimmer />
   ) : (
     all.map((item, index) => (
-  <div key={index} className='font-bold pl-10 pr-10'>
+  <div key={index} className='font-bold max-w-5xl mx-auto'>
   {item?.categories ?
   <button id={index}
-      className='font-bold text-left h-10 bg-gray-200 ml-14 mr-11 mt-5 p-2 relative select-none flex space-between' onClick={changeShowState}>{item?.title} ▼
+      className='font-bold text-left h-10 bg-gray-200 ml-14 mr-11 mt-5 p-2 relative select-none flex space-between gap-10' 
+      onClick={() => changeShowState(index)}>{item?.title}
+          <div className=''>{show && selectedItemId === index ? '▲' : '▼'}</div>
       </button> : null} 
-    { 
+    {show && selectedItemId === index &&
       item?.categories?.map((subItem, subIndex) => (
       subItem?.itemCards?.map((tubItem, tubIndex) => (<>
         {tubItem?.card?.info?.imageId ?
@@ -307,63 +308,6 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
       </>))))}
   </div>)))}
 
-
-      <div className='pl-12 bg-gray-100 rounded-md p-4 m-8'>
-
-      <div>
-        <img className='w-56 h-40' src = {IMG_CDN_URL+ restaurantName.cloudinaryImageId} alt={restaurantName.name} />
-      </div>
-      <div className='font-bold'>
-        {restaurantName.name}
-      </div>
-        <div className=''>
-        {restaurantName.cuisines.join()}
-        </div>
-        <div className=''>
-        {restaurantName.city}
-        </div>
-        <div>
-          {restaurantName.avgRating}
-        </div>
-        </div>
-
-      <div className='flex'>
-      <button 
-      className='font-bold text-left w-full h-10 bg-gray-200 ml-14 mr-11 mt-5 p-2 relative select-none flex space-between' onClick={changeShowState}>{title} ▼
-      </button>
-      </div>
-      {show &&
-       Object.values(filteredMenu).map((item, index) => (<>
-        <div className='flex flex-row justify-between p-2  mt-5 shadow-lg bg-white-20 pl-10 pr-10' key={index}>
-        <div className='mb-2 flex flex-row'>
-        <div>{item?.card?.info?.isVeg ? <img className ="w-5 h-5" src={veg} alt="Vegetarian Icon" />
-        
- : <img className ="w-5 h-5" src={nonVeg} alt="nonVegetarian Icon" />}</div>
-        <img className='w-36 h-29' src={IMG_CDN_URL + item?.card?.info?.imageId} alt={item?.card?.info?.name} />
-        <div className='flex flex-col pl-2'>
-        <div className='font-semibold'>{item?.card?.info?.name}</div>
-        ₹{item?.card?.info?.price / 100}
-        <div className='text-sm justify-center'>{item?.card?.info?.description}</div>
-
-        </div>
-        </div>
-          <div className='flex justify-end space-x-2 h-8'>
-            <button
-              onClick={() => handleSubtractItem(item?.card?.info)}
-              className='bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md ml-auto'
-            >
-              -
-            </button>
-            <span className='px-2 py-1'>{count[item?.card?.info?.id] || 0}</span>
-            <button
-              onClick={() => handleAddItem(item?.card?.info)}
-              className='bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-md'
-            >
-              +
-            </button>
-          </div>
-        </div>
-      </>))}
     </div>
   );
 };

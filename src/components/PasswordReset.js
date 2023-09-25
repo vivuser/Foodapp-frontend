@@ -11,7 +11,7 @@ const PasswordReset = () => {
     const handlePasswordReset = async(e) => {
         e.preventDefault()
         try {
-        const submitResetInfo = await axios.post('http://localhost:8080/reset-password/?token=76c5ce37ec287fbf7c4242276727534769b9fcbbdf0663ea7ecc69c9815eec77',{
+        const submitResetInfo = await axios.post(`http://localhost:8080/reset-password/?token=${resTok}`,{
         newPassword   
         },  
         {

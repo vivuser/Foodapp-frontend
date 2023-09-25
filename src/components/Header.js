@@ -24,7 +24,8 @@ const Header = () => {
     const [login, setLogin] = useState(false);
     const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
 
-    const openSideDrawer = () => {
+    const openSideDrawer = (e) => {
+        e.preventDefault()
         setIsSideDrawerOpen(true);
     }
 
@@ -72,11 +73,8 @@ const Header = () => {
                 className="ml-1 text-2xl text-gray-600"/>
                 <span className="text-red-500">{cartItems.length}</span>
                 </Link>
-                <button onClick={openSideDrawer}>
-                    press
-                </button>
                 <SideDrawer isOpen={isSideDrawerOpen} onClose={closeSideDrawer} />
-                <Link to="/login">
+                <Link onClick={openSideDrawer}>
                         <FontAwesomeIcon
                             icon={faUser} // Use the user icon here
                             className="ml-1 mr-4 text-2xl text-gray-600"

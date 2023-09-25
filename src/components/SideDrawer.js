@@ -18,15 +18,17 @@ const SideDrawer = ( { isOpen, onClose }) => {
             <div className='p-2 m-8 text-orange-600 text-md'>
             New here?    
             <a className='pl-2 ' onClick={Register}>create an account</a>
+            <img className='pl-14 pt-5' src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_147,h_140/Image-login_btpq7r"></img>
+
             </div> 
-            <div className='pl-20'>
+            <div className='flex pl-20 w-80 min-h-screen justify-center'>
             {login ? <Login/> : <Signup/>}
             </div>
             <button
-            className='absolute top-4 right-4 text-gray-600 hover:text-gray-800' 
+            className='absolute top-4 right-4 text-gray-600 hover:text-gray-800 font-bold bg-gray-200 rounded-full w-7 text-lg' 
             onClick={onClose}
             >
-                Close
+                X
             </button>
         </div>
     )
