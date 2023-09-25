@@ -211,19 +211,23 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
         <option value="default">Default Sort</option>
         </select>
         </div>
-        <div className='flex flex-row mt-2 max-w-5xl mx-auto'>
-        <div className='pl-10'>
-      <div className='font-bold'>{restaurantName.name}</div>
-      <div className='font-serif'>{restaurantName.cuisines.join()}</div>
-      <div className='font-serif'>{restaurantName.city}</div>
+        <div className='flex flex-row mt-2 max-w-4xl mx-auto bg-orange-50 p-4'>
+        <div className='pl-5'>
+      <div className='font-bold pb-1 text-lg text-gray-700'>{restaurantName.name}</div>
+      <div className='font-serif pt-1 pb-1'>{restaurantName.cuisines.join()}</div>
+      <div className='font-serif pt-1'>{restaurantName.city}</div>
       </div>
-        <div className='ml-auto pr-10'>
-        <div>{restaurantName.avgRating}<FontAwesomeIcon color='gray' icon={faStar} /></div>
+        <div className='ml-auto pr-2 pl-2 border-2 border-solid bg-gray-100 border-gray-300 hover:bg-gray-200'>
+        <div className='pl-1'>{restaurantName.avgRating}<FontAwesomeIcon color='green' icon={faStar} /></div>
+        <hr className='border-t-1 m-1 border-gray-400'></hr>
         <div>{restaurantName.totalRatingsString}</div>
+        <hr className='border-t-1 m-1 border-gray-400'></hr>
       <div className='font-bold'>{restaurantName.costForTwoMessage}</div>
         </div>
       </div>
-      <hr className='border-dashed border-gray-400 m-10 pl-20'></hr>
+      <div className='max-w-5xl justify-between mx-auto'>
+      <hr className='border-dashed border-t-1 border-gray-300 m-10'></hr>
+      </div>
       </div>
 
     
@@ -252,13 +256,31 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
     <Shimmer />
   ) : (
     all.map((item, index) => (
-  <div key={index} className='font-bold max-w-5xl mx-auto'>
+    
+  <div key={index} className='font-bold max-w-4xl mx-auto'>
   {item?.categories ?
+  <div>
+  <hr className='border-t-8 bg-gray-200 h-4 max-w-1/2 m-4 border-gray-200'></hr>
+  <div className='flex justify-between'>
+  <div>
   <button id={index}
-      className='font-bold text-left h-10 bg-gray-200 ml-14 mr-11 mt-5 p-2 relative select-none flex space-between gap-10' 
-      onClick={() => changeShowState(index)}>{item?.title}
-          <div className=''>{show && selectedItemId === index ? '▲' : '▼'}</div>
-      </button> : null} 
+      className='font-bold h-10 bg-white ml-5 mr-11 p-2 relative select-none flex justify-between items-center' 
+      onClick={() => changeShowState(index)}> {item?.title}
+      </button>
+      </div>
+      <div
+              className='clickable-space w-16 h-10'
+              style={{cursor: 'pointer'}}
+              onClick={() => changeShowState(index)}
+            ></div>
+      <div
+              className='clickable-space w-96 h-10 pr-8'
+              style={{cursor: 'pointer'}}
+              onClick={() => changeShowState(index)}
+            ></div>
+      <div className='flex items-center justify-end pr-10 text-gray-600' style={{cursor: 'pointer'}} onClick={() => changeShowState(index)}>{show && selectedItemId === index ? '▲' : '▼'}</div>
+      </div>
+      </div> : null} 
     {show && selectedItemId === index &&
       item?.categories?.map((subItem, subIndex) => (
       subItem?.itemCards?.map((tubItem, tubIndex) => (<>
