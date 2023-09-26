@@ -19,6 +19,7 @@ import Login from "./components/Login";
 import Search from "./components/Search";
 import OrderStatus from "./components/OrderStatus";
 import PasswordReset from "./components/PasswordReset";
+import { UserProvider } from "./components/userContext";
 
  const AppLayout = () => {
 
@@ -35,6 +36,7 @@ import PasswordReset from "./components/PasswordReset";
     // },[])
 
     return (
+        <UserProvider>
         <Provider store={store}>
         {/* <UserContext.Provider value={
             {user: user,
@@ -45,6 +47,7 @@ import PasswordReset from "./components/PasswordReset";
         <Footer />
         {/* </UserContext.Provider> */}
         </Provider>
+        </UserProvider>
     );
 }
 

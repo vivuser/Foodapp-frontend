@@ -7,7 +7,7 @@ const Footer = () => {
     const { user } = useContext(UserContext)
 
     return(<>
-    <div className="bg-pink-200 py-8 mt-20">
+    <div className="bg-pink-200 py-8">
         <div className="flex justify-between items-center font-serif pb-16">
         <div className="flex flex-col items-center text-center">
         <Link to="/about">

@@ -24,26 +24,16 @@ const RestaurantMenu = () => {
   const dispatch = useDispatch()
 
   const [count,setCount] = useState({});
-  const [decount, setDecount] = useState({});
   const [searchMenu, setSearchMenu] = useState("")
   const [filteredMenu, setFilteredMenu] = useState([])
-  const [sortOrder, setSortOrder] = useState('default')
-  const [showVeg, setShowVeg] = useState(false)
-  const [category, setCategory] = useState([])
   const [isAdded, setIsAdded] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartItem, setCartItem] = useState([])
   const [selectedItemId, setSelectedItemId] = useState(-1);
-  
-
-    console.log(menuItems)
-
 
   const openModal = () => {
     setIsModalOpen(true)
   };
-
-
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -69,7 +59,7 @@ const RestaurantMenu = () => {
   }
 
 
-    const totality = cartItems.reduce((total, item) => total + item.item.price/100,0)
+  const totality = cartItems.reduce((total, item) => total + item.item.price/100,0)
 
   useEffect(() =>{
     const data = filterMenu(searchMenu, menuItems)

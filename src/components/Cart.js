@@ -101,7 +101,7 @@ const handleSubmitInfo = async(e) =>{
 return (<>
 <div >
   <div className="flex bg-gray-100 justify-center">
-  <div className="w-1/2 bg-gray-100">
+  <div className="w-1/2 bg-gray-100 h-2/3 screen">
   <div className= {`${isSignUpModalOpen? 'bg-white h-custom m-10': 'bg-white h-80 m-10'}`}>
       <div className="flex justify-between">
       <div className="font-bold m-5 mb-3 pl-6">Account</div>

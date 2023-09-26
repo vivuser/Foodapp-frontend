@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Signup from './Signup';
 import axios from 'axios';
+import { useUser } from './userContext';
 
 const Login = () => {
   const [isForgotPasswordClick, setIsForgotPasswordClick] = useState(false)
   const [email, setEmail] = useState("")
+  const { setUser } = useUser();
 
   const [form, setForm] = useState({
     email:"",
@@ -32,6 +34,7 @@ const Login = () => {
             Authorization:  `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
         }
         })
+        setUser(loginData.data)
     }
     
     catch (error) {
