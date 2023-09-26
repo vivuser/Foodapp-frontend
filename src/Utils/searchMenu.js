@@ -1,5 +1,5 @@
 export function filterMenu(search, menuItems) {
-    if (!menuItems) {
+    if (!menuItems || search.length ===0) {
       return [];
     }
   

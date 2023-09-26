@@ -30,17 +30,19 @@ const RestaurantMenu = () => {
   const [sortOrder, setSortOrder] = useState('default')
   const [showVeg, setShowVeg] = useState(false)
   const [category, setCategory] = useState([])
-  const [show, setShow] = useState(false)
   const [isAdded, setIsAdded] = useState({})
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartItem, setCartItem] = useState([])
-  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [selectedItemId, setSelectedItemId] = useState(-1);
+  
 
+    console.log(menuItems)
 
 
   const openModal = () => {
     setIsModalOpen(true)
   };
+
 
 
   useEffect(() => {
@@ -57,56 +59,22 @@ const RestaurantMenu = () => {
     setCount(initialCount);
   },[])
 
-  const changeShowState = (id) =>{
-    setShow((prevShow) => !prevShow);
-    setSelectedItemId(id);
-  }
-
-  const handleVegToggle = () => {
-    setShowVeg(!showVeg)
-    const vegFilter = [...filteredMenu].filter(v => (showVeg ? v.card.info.isVeg : true))
-    console.log(vegFilter)
-    setFilteredMenu(vegFilter)
-  } 
-
-  const sortHighToLow = () =>{
-    const sortedMenu =[...filteredMenu].sort((a,b)=> b.card.info.price - a.card.info.price)
-    setFilteredMenu(sortedMenu);
+  const setIndex = (index) => {
+    if (selectedItemId === index){
+      setSelectedItemId(-1)
     }
-
-  const sortLowToHigh = () => {
-    const sortedMenu = [...filteredMenu].sort((a,b) => a.card.info.price - b.card.info.price)
-    setFilteredMenu(sortedMenu)
+    else{
+    setSelectedItemId(index)
+    }
   }
 
-  const sortDefault = () => {
-    setFilteredMenu(filteredMenu)
-  }
-
-  const handleSortingChange = (event) =>{
-    const selectedValue = event.target.value;
-    setSortOrder(selectedValue)
-
-    if (selectedValue === 'highToLow') 
-      {
-        sortHighToLow();
-      }
-      else if (selectedValue === 'lowToHigh')
-      {
-        sortLowToHigh();
-      }
-      else {
-        sortDefault();
-      }
-  }
 
     const totality = cartItems.reduce((total, item) => total + item.item.price/100,0)
 
   useEffect(() =>{
     const data = filterMenu(searchMenu, menuItems)
     setFilteredMenu(data);
-    setCategory(title)
-  },[searchMenu, menuItems]);
+  },[searchMenu]);
 
 
   const handleCount=(itemId) =>{
@@ -182,16 +150,29 @@ every.map(item =>{
 console.log(allEvery)
 
 console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
+
+useEffect(() => {
+  const firstItemWithCategoriesIndex = all.findIndex((item) => item.categories && item.categories.length > 0);
+
+  if (firstItemWithCategoriesIndex !== -1){
+    setSelectedItemId(firstItemWithCategoriesIndex);
+  }
+}, [all[0]])
+
+
  
   
   return !restaurant ? (
     <Shimmer /> 
   ) : (
     <div className='gap-8'>
-      {/* ... (restaurant info) */}
-      <div>
-        <input className='ml-5 pl-2' type='text' placeholder='search menu' value={searchMenu}
+      <div > 
+        <div className='flex m-4 ml-8'>
+      <div className='border border-solid border-gray-300'>
+        <input className='ml-5 pl-2' style={{ outline: 'none' }} type='text' placeholder='search menu' value={searchMenu}
         onChange={(e)=> {setSearchMenu(e.target.value)}} />
+        </div>
+        <div>
         <MdSearch size={30} color="gray"
         onClick={()=>{
           const data = filterMenu(searchMenu, menuItems)
@@ -199,17 +180,7 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
           setFilteredMenu(data)
         }}
         />
-           <button   className={`ml-4 px-2 py-1 rounded-md ${
-    showVeg ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-700'
-  }`} onClick={handleVegToggle}>
-        show only veg
-      </button>
-        <div className='flex justify-end pr-6'>
-        <select value={sortOrder} onChange={handleSortingChange}>
-        <option value="highToLow">High To Low</option>
-        <option value="lowToHigh">Low To High</option>
-        <option value="default">Default Sort</option>
-        </select>
+        </div>
         </div>
         <div className='flex flex-row mt-2 max-w-4xl mx-auto bg-orange-50 p-4'>
         <div className='pl-5'>
@@ -227,9 +198,28 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
       </div>
       <div className='max-w-5xl justify-between mx-auto'>
       <hr className='border-dashed border-t-1 border-gray-300 m-10'></hr>
-      </div>
-      </div>
+      {filteredMenu?.map((item, index) => {
+         return (<>
+                <div className='flex justify-between max-w-3xl mx-auto'>
+                
+                <div className='m-4'>
+                <div key={index}>{item?.card?.info?.name}</div>
+                <div key={index}>₹{item?.card?.info?.price/100}</div>
+                <div key={index}>{item?.card?.info?.description}</div>
 
+                </div>
+
+                <div>
+                <img className="w-28 h-28 ml-5" src ={IMG_CDN_URL + item?.card?.info?.imageId}></img>
+                </div>
+
+                </div>
+                </>)
+        })}
+      </div>
+    
+      </div>
+   
     
 
       {
@@ -251,6 +241,8 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
     )    
   }
 
+  
+
 
       {!all ? (
     <Shimmer />
@@ -265,23 +257,13 @@ console.log(cartItems, "kkkkkkkkkkkkkkkkkkkkkkk")
   <div>
   <button id={index}
       className='font-bold h-10 bg-white ml-5 mr-11 p-2 relative select-none flex justify-between items-center' 
-      onClick={() => changeShowState(index)}> {item?.title}
+      onClick={() => setIndex(index)}> {item?.title}
       </button>
       </div>
-      <div
-              className='clickable-space w-16 h-10'
-              style={{cursor: 'pointer'}}
-              onClick={() => changeShowState(index)}
-            ></div>
-      <div
-              className='clickable-space w-96 h-10 pr-8'
-              style={{cursor: 'pointer'}}
-              onClick={() => changeShowState(index)}
-            ></div>
-      <div className='flex items-center justify-end pr-10 text-gray-600' style={{cursor: 'pointer'}} onClick={() => changeShowState(index)}>{show && selectedItemId === index ? '▲' : '▼'}</div>
+      <div className='flex items-center justify-end pr-10 text-gray-600' style={{cursor: 'pointer'}}>{selectedItemId === index ? '▲' : '▼'}</div>
       </div>
-      </div> : null} 
-    {show && selectedItemId === index &&
+      </div> : null}
+    {selectedItemId === index && 
       item?.categories?.map((subItem, subIndex) => (
       subItem?.itemCards?.map((tubItem, tubIndex) => (<>
         {tubItem?.card?.info?.imageId ?
