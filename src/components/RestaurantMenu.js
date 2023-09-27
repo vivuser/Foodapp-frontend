@@ -22,7 +22,6 @@ const RestaurantMenu = () => {
 
     const { restaurant, menuItems, title, restaurantName, wholeData } = useRestaurant(resId);
 
-    const { setRestaurantInfo } = useRestaurantInfo()
 
   const cartItems = useSelector((store) => store.cart.items);
 
