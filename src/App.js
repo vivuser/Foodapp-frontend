@@ -21,6 +21,7 @@ import OrderStatus from "./components/OrderStatus";
 import PasswordReset from "./components/PasswordReset";
 import { UserProvider } from "./components/userContext";
 import { RestaurantProvider } from "./components/restaurantContext";
+import Profile from "./components/Profile";
 
  const AppLayout = () => {
 
@@ -102,6 +103,10 @@ export const appRouter = createBrowserRouter([
             {
                 path: '/reset-password/:resTok',
                 element: <PasswordReset/>
+            },
+            {
+                path: '/account',
+                element: <Profile/>
             }
         ]
     }

@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import LoginOnCheckout from "./LoginOnCheckout";
 import SignUpOnCheckout from "./SignUpOnCheckout";
 import '../index.css';
+import { addOrder } from "../Utils/orderSlice";
+import { clearOrderHistory } from "../Utils/orderSlice";
 
 
 const Cart = () => {
@@ -43,20 +45,10 @@ if (!summarizedCart[element.item.id]){
 
 console.log(Object.values(summarizedCart))
 
-// const handleDecrementQuantity = (itemId) => {
-//   console.log(itemId)
-//   const itemToUpdate = cartItems.find(item => item.item.id === itemId);
-//   if (itemToUpdate) {
-//     console.log(dispatch(decrementItem(itemToUpdate.item.id)));
-//   }
-// };
-
 const handleDecrementQuantity = (item) => {
   console.log(item);
   dispatch(decrementItem(item));
 };
-
-
 
 const handleIncrementQuantity = (itemId) => {
   console.log(itemId)
@@ -84,6 +76,7 @@ const handleSubmitInfo = async(e) =>{
       }
     })
     const responseData = placeOrder.data;
+    dispatch(addOrder(responseData));
     const dbId = responseData.order._id
     console.log('ResponseData', dbId)
 

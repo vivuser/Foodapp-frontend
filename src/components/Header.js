@@ -104,23 +104,35 @@ const Header = () => {
                             className="ml-1 mr-4 text-2xl text-gray-600"
                         />}
                     </Link>
+                <Link to='/account'>
+                    <li>
+                    Account
+                    </li>
+                </Link>
             </ul>
         </div>
     </div>
-    {isCartHovered && 
+    {isCartHovered && cartItems.length>0 ?
         (<div className="flex justify-end">
         <div className="w-10 h-10 bg-white transform rotate-45 absolute z-50" style={{margin: '-22px 56px 12px 4px' }}></div>
         <div className="w-60 h-80 bg-white absolute z-50 items-end mr-8" style={{margin: '-20px 50px 12px 4px', border: '1px solid #f5f5f5', borderTop: 'none' }}>
-            <div className="m-4 mb-1 font-serif">{restaurantInfo.name}</div>
-            <div className=" ml-4 font-serif text-xs text-gray-600">{restaurantInfo.locality}</div>
+            <div className="m-4 mb-1 font-serif">{restaurantInfo?.name}</div>
+            <div className=" ml-4 font-serif text-xs text-gray-600">{restaurantInfo?.locality}</div>
             <div className=" ml-4 mt-3 font-serif text-xs text-blue-500 font-bold">VIEW FULL MENU</div>
             <hr className="m-2 mt-4"></hr>
-             {cartItems.map((item, index)=>{
-                return (<div className="ml-4 mt-3 font-serif text-xs text-black">{item.item.name}</div>)
+             {cartItems?.map((item, index)=>{
+                return (<div className="ml-4 mt-3 font-serif text-xs text-black">{item?.item?.name}</div>)
             })}       
         </div>
         </div>
-        )
+        ): (isCartHovered &&
+        <div className="flex justify-end">
+        <div className="w-10 h-10 bg-white transform rotate-45 absolute z-50" style={{margin: '-22px 56px 12px 4px' }}></div>
+        <div className="w-60 h-30 bg-white absolute z-50 items-end mr-8" style={{margin: '-20px 50px 12px 4px', border: '1px solid #f5f5f5', borderTop: 'none' }}>
+            <div className=" ml-4 mt-3 font-serif text-md text-blue-500 font-bold">CART EMPTY</div> 
+            <p className="m-4 text-sm">Good food is always cooking! Go ahead, order some yummy items from the menu.</p>
+        </div>
+        </div>)
         }
     </>);
 };
