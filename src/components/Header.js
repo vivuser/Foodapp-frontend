@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import SideDrawer from "./SideDrawer";
 import { useUser } from "./userContext";
+import { useRestaurantInfo } from "./restaurantContext";
 
 
 const Title = () => (
@@ -24,6 +25,19 @@ const Header = () => {
     const [title, setTitle] = useState("Food Villa");
     const [login, setLogin] = useState(false);
     const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
+    const [isCartHovered, setIsCartHovered] = useState(false);
+    const { restaurantInfo }  = useRestaurantInfo();
+
+
+    console.log(restaurantInfo,  '65464877945646546554679876513246549794')
+
+    const handleMouseEnter = () => {
+        setIsCartHovered(true)
+    }
+
+    const handleMouseLeave = () => {
+        setIsCartHovered(false)
+    }
 
     const openSideDrawer = (e) => {
         e.preventDefault()
@@ -44,11 +58,19 @@ const Header = () => {
     }
 
 
-    return (
+
+    console.log(cartItems, 'gjhgdjsghfhgshdfhghgshdgfhsdgfhsgdhfgsj')
+
+
+    return (<>
+    
+
     <div className="flex justify-between bg-pink-50 shadow-lg">
     <Title />
 
         <h1 className="text-4xl mt-8 font-serif-bold"></h1>
+
+      
 
         <div className="nav-items">
             <ul className="flex py-4 mt-3 gap-3">
@@ -70,7 +92,7 @@ const Header = () => {
                 <Link to="/cart">
                 <FontAwesomeIcon
                 icon={faShoppingCart}
-                className="ml-1 text-2xl text-gray-600"/>
+                className="ml-1 text-2xl text-gray-600" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}/>
                 <span className="text-red-500">{cartItems.length}</span>
                 </Link>
                 <SideDrawer isOpen={isSideDrawerOpen} onClose={closeSideDrawer} />
@@ -85,7 +107,22 @@ const Header = () => {
             </ul>
         </div>
     </div>
-    );
+    {isCartHovered && 
+        (<div className="flex justify-end">
+        <div className="w-10 h-10 bg-white transform rotate-45 absolute z-50" style={{margin: '-22px 56px 12px 4px' }}></div>
+        <div className="w-60 h-80 bg-white absolute z-50 items-end mr-8" style={{margin: '-20px 50px 12px 4px', border: '1px solid #f5f5f5', borderTop: 'none' }}>
+            <div className="m-4 mb-1 font-serif">{restaurantInfo.name}</div>
+            <div className=" ml-4 font-serif text-xs text-gray-600">{restaurantInfo.locality}</div>
+            <div className=" ml-4 mt-3 font-serif text-xs text-blue-500 font-bold">VIEW FULL MENU</div>
+            <hr className="m-2 mt-4"></hr>
+             {cartItems.map((item, index)=>{
+                return (<div className="ml-4 mt-3 font-serif text-xs text-black">{item.item.name}</div>)
+            })}       
+        </div>
+        </div>
+        )
+        }
+    </>);
 };
 
 export default Header;

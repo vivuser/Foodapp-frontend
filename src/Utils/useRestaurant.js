@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { FETCH_MENU_URL } from "../components/Constants";
+import { useRestaurantInfo } from "../components/restaurantContext";
 
 const useRestaurant = (resId) => {
 
@@ -9,6 +10,9 @@ const useRestaurant = (resId) => {
   const[title, setTitle] = useState(null)
   const [restaurantName, setRestaurantName] = useState(null)
   const [wholeData, setWholeData] = useState(null)
+
+
+  const { setRestaurantInfo } = useRestaurantInfo();
 
 
     useEffect(() => {
@@ -30,6 +34,7 @@ const useRestaurant = (resId) => {
         console.log(json.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.title)
         setTitle(json.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.title)
         console.log(json.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards)
+        setRestaurantInfo(json.data?.cards[0]?.card?.card?.info)
       }
 
       return {

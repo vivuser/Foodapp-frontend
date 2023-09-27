@@ -20,6 +20,7 @@ import Search from "./components/Search";
 import OrderStatus from "./components/OrderStatus";
 import PasswordReset from "./components/PasswordReset";
 import { UserProvider } from "./components/userContext";
+import { RestaurantProvider } from "./components/restaurantContext";
 
  const AppLayout = () => {
 
@@ -37,6 +38,7 @@ import { UserProvider } from "./components/userContext";
 
     return (
         <UserProvider>
+        <RestaurantProvider>
         <Provider store={store}>
         {/* <UserContext.Provider value={
             {user: user,
@@ -47,6 +49,7 @@ import { UserProvider } from "./components/userContext";
         <Footer />
         {/* </UserContext.Provider> */}
         </Provider>
+        </RestaurantProvider>
         </UserProvider>
     );
 }

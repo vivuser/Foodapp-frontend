@@ -13,12 +13,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom/dist/umd/react-router-dom.development';
+import Header from './Header';
+import { useRestaurantInfo } from './restaurantContext';
 
 const RestaurantMenu = () => {
 
   const { resId } = useParams();
 
     const { restaurant, menuItems, title, restaurantName, wholeData } = useRestaurant(resId);
+
+    const { setRestaurantInfo } = useRestaurantInfo()
+
   const cartItems = useSelector((store) => store.cart.items);
 
   const dispatch = useDispatch()
@@ -154,12 +159,12 @@ useEffect(() => {
   
   return !restaurant ? (
     <Shimmer /> 
-  ) : (
+  ) : (<>
     <div className='gap-8'>
       <div > 
-        <div className='flex m-4 ml-8'>
-      <div className='border border-solid border-gray-300'>
-        <input className='ml-5 pl-2' style={{ outline: 'none' }} type='text' placeholder='search menu' value={searchMenu}
+        <div className='flex m-4 justify-between max-w-xs justify-between mx-auto'>
+      <div className='border border-solid border-gray-300 rounded-md'>
+        <input className='ml-5 mr-2 pl-2 pt-1' style={{ outline: 'none' }} type='text' placeholder = {`Search in ${restaurant.name}`} value={searchMenu}
         onChange={(e)=> {setSearchMenu(e.target.value)}} />
         </div>
         <div>
@@ -179,7 +184,7 @@ useEffect(() => {
       <div className='font-serif pt-1'>{restaurantName.city}</div>
       </div>
         <div className='ml-auto pr-2 pl-2 border-2 border-solid bg-gray-100 border-gray-300 hover:bg-gray-200'>
-        <div className='pl-1'>{restaurantName.avgRating}<FontAwesomeIcon color='green' icon={faStar} /></div>
+        <div className='pl-1'><FontAwesomeIcon color='green' icon={faStar} /> {restaurantName.avgRating}</div>
         <hr className='border-t-1 m-1 border-gray-400'></hr>
         <div>{restaurantName.totalRatingsString}</div>
         <hr className='border-t-1 m-1 border-gray-400'></hr>
@@ -209,7 +214,7 @@ useEffect(() => {
       </div>
     
       </div>
-   
+        
     
 
       {
@@ -240,7 +245,7 @@ useEffect(() => {
     all.map((item, index) => (
     
   <div key={index} className='font-bold max-w-4xl mx-auto'>
-  {item?.categories ?
+  {filteredMenu.length ===0 && item?.categories ?
   <div>
   <hr className='border-t-8 bg-gray-200 h-4 max-w-1/2 m-4 border-gray-200'></hr>
   <div className='flex justify-between'>
@@ -303,7 +308,7 @@ useEffect(() => {
   </div>)))}
 
     </div>
-  );
+  </>);
 };
 
 export default RestaurantMenu;
