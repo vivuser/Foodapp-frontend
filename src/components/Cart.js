@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,8 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginOnCheckout from "./LoginOnCheckout";
 import SignUpOnCheckout from "./SignUpOnCheckout";
 import '../index.css';
-import { addOrder } from "../Utils/orderSlice";
-import { clearOrderHistory } from "../Utils/orderSlice";
+import { addOrder, clearOrderHistory } from "../Utils/orderSlice";
 
 
 const Cart = () => {
@@ -22,6 +21,13 @@ const Cart = () => {
   const [isSignUpModalOpen, setSignUpModalOpen] = useState(false)
   const dispatch = useDispatch();
   const cartItems = useSelector((store) => store.cart.items);
+  const orderedItems = useSelector((store)=> store.orderHistory?.orders || []);
+
+
+  useEffect(() => {
+    console.log(orderedItems, "ordered items");
+    console.log(cartItems, 'cartItems')
+  }, [orderedItems, cartItems]);
 
   const handleClearCart = () => {
     dispatch(clearCart());
@@ -34,6 +40,7 @@ const Cart = () => {
 
 
 console.log(cartItems)
+console.log(orderedItems)
 const summarizedCart = {}
 
 cartItems.forEach(element => {
@@ -76,18 +83,17 @@ const handleSubmitInfo = async(e) =>{
       }
     })
     const responseData = placeOrder.data;
-    dispatch(addOrder(responseData));
+    console.log(responseData)
+    console.log((dispatch(addOrder(responseData))));
     const dbId = responseData.order._id
-    console.log('ResponseData', dbId)
-
-
-
+    console.log('ResponseData', responseData)
     navigation(`/orderStatus/${dbId}`);
   }
   catch(error) {
     console.log('Error:', error);
   }
   }
+
 
 
 

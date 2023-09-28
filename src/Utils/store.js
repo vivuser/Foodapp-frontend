@@ -5,7 +5,7 @@ import orderSlice from "./orderSlice.js";
 const store = configureStore({
     reducer: {
         cart: cartSlice,
-        orderHisory: orderSlice,
+        orderHistory: orderSlice,
     }
 });
 

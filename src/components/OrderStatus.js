@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { addOrder, clearOrderHistory } from "../Utils/orderSlice";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const OrderStatus = () => {
     const [orderStatus, setOrderStatus] = useState(null);
     const { dbId } = useParams();
+
+  const dispatch = useDispatch();
+    
+
+    let orderedHis = useSelector((store)=> store.orderHistory);
+    // orderedHis = Object.values(orderedHis)
+    
+    // const orderedItems = orderedHis[orderedHis.length -1]
+
+    console.log(orderedHis)
 
     useEffect(() => {
         getOrderStatus(dbId);
@@ -27,6 +40,9 @@ const OrderStatus = () => {
         }
         const data = await response.json();
         setOrderStatus(data);
+        if (data) {
+            dispatch(addOrder(data))
+        }
         console.log('Order status: ', orderStatus.status);
     }   catch (error) {
         console.error('Error fetching order status:', error);
