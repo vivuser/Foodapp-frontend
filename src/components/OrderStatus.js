@@ -9,14 +9,18 @@ const OrderStatus = () => {
     const { dbId } = useParams();
 
   const dispatch = useDispatch();
-    
+  let orderedHis = useSelector((store)=> store.orderHistory);
+  const orderElem = orderedHis['orders']
 
-    let orderedHis = useSelector((store)=> store.orderHistory);
-    // orderedHis = Object.values(orderedHis)
-    
-    // const orderedItems = orderedHis[orderedHis.length -1]
 
-    console.log(orderedHis)
+  const orderedItems = [orderElem]
+  
+  const finalOrderItem = orderedItems[0]['order']
+  console.log(orderedItems)
+
+ 
+
+    console.log(finalOrderItem)
 
     useEffect(() => {
         getOrderStatus(dbId);
