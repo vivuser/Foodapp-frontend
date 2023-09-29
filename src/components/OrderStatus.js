@@ -43,35 +43,39 @@ const OrderStatus = () => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log(data)
         setOrderStatus(data);
-        if (data) {
-            dispatch(addOrder(data))
-        }
-        console.log('Order status: ', orderStatus.status);
+        // if (data) {
+        //     dispatch(addOrder(data))
+        // }
+        // console.log('Order status: ', orderStatus.status);
     }   catch (error) {
         console.error('Error fetching order status:', error);
     }
 }
 
+console.log(orderStatus)
 
   return (
         <div>
             {orderStatus !== null? (
                 <div className='justify-content text-center m-10'>
-                <p className='font-bold bg-green-200 w-80 p-4 m-4'>Order status: {orderStatus.status}</p>
+                <p className='font-bold bg-green-200 w-80 p-4 m-4'>Order status: {orderStatus?.status}</p>
                 <p className='text-lg font-serif font-bold'>Ordered Items</p>
                 <ul className='font-serif font-sm'>
-                {orderStatus.order.map((item, index)=>(
+                {Object.values(orderStatus?.order?.orderData?.cartInfo?.orderData)?.map((item, index)=>(
                    <li key={index} className='text-left'>
-                    <span className='mr-8'>{item.item.name}</span> ₹{item.item.price/100}</li>
+                    <span className='mr-8'>{item?.item?.name}</span> ₹{item?.item?.price/100}</li>
                 ))}
                 </ul>
+                <p className='font-bold bg-orange-200 w-80 p-4 m-4'>Here's your order number for reference: {orderStatus?.order?.orderData?.orderNumber}</p>
+
                 </div>
             ) : (
                 <p>Loading</p>
             )}
         </div>
   );
-};
+};  
 
 export default OrderStatus;

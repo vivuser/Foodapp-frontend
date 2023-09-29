@@ -35,6 +35,7 @@ const Login = () => {
         }
         })
         setUser(loginData.data)
+        console.log(loginData.data.userId, 'loginData on frontend')
     }
     
     catch (error) {

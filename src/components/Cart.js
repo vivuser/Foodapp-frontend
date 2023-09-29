@@ -13,10 +13,11 @@ import LoginOnCheckout from "./LoginOnCheckout";
 import SignUpOnCheckout from "./SignUpOnCheckout";
 import '../index.css';
 import { addOrder, clearOrderHistory } from "../Utils/orderSlice";
+import { useUser } from "./userContext";
 
 
 const Cart = () => {
-
+  const { user } = useUser();
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setSignUpModalOpen] = useState(false)
   const dispatch = useDispatch();
@@ -65,8 +66,11 @@ const handleIncrementQuantity = (itemId) => {
   }
 };
 
+console.log(user, "user Data on loginn getting fro the context API")
+
+const userId = user.userId
 const cartInfo = {
-  "orderData": {cartItems}
+  "orderData": {...cartItems, userId}
 }
 
 
@@ -76,7 +80,7 @@ const navigation = useNavigate();
 const handleSubmitInfo = async(e) =>{
   e.preventDefault();
   try{
-    const placeOrder = await axios.post("http://localhost:8080/submitCart",{...cartInfo},
+    const placeOrder = await axios.post("http://localhost:8080/submitCart",{cartInfo},
     {
       headers:{
         Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
