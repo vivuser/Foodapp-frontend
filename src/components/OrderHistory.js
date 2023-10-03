@@ -1,22 +1,44 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useUser } from './userContext'
+
 
 const OrderHistory = () => {
-  let orderedHis = useSelector((store)=> store.orderHistory);
-  const orderElem = orderedHis['orders']
+  const [orderHistory, setOrderHistory] = useState([])
+
+  const userInfo  = localStorage.getItem("user")
+
+  const userData  = JSON.parse(userInfo)
+  const userId = userData.userId
+  console.log(userData)
+  
+
+  console.log('*****************************', userId)
+
+  useEffect(() => {handleOrderHistoryData()}, [])
+
+    const handleOrderHistoryData = async() => {
+    try{
+      const data = await fetch('http://localhost:8080/account', {
+        userId
+      },
+      {
+      headers: {
+        Authorization:  `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
+    }
+  })
+    console.log(data)
+    }
+    catch(error){
+      console.error(error, "userId doesn't exist")
+    }
+  }
   
   return (<>
     <div>
-      {orderElem.map((item,index) => {
-        console.log(item['order']['orderData']?.cartItems);
-        return (
-          <div className='font-bold bg-red-500'>
-        {item['order']?.orderData?.cartItems?.map((subItem,index) => (
-          <div key={index}>{subItem?.item?.name}</div>
-          ))}
-    </div>
-        );
-      })}   
+      Orders History
+      {
+
+      }   
     </div>
   </>)
 }

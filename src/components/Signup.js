@@ -30,6 +30,11 @@ const Signup = () => {
 
             console.log('Response received:', responseComing.data);
 
+            setFirstName("")
+            setLastName("")
+            setEmail("");
+            setPassword("");
+
         } catch (error) {
             console.error('Error:', error);
         }

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 
 //createContext is a function from React that creates a new context object,
@@ -11,7 +11,15 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem('user'); 
+        return storedUser ? JSON.parse(storedUser) : {}; 
+    });
+
+useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user));
+}, [user]);
+
 
     return(
         <UserContext.Provider value={{ user , setUser }}>
