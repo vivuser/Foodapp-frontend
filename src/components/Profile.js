@@ -2,14 +2,19 @@ import React, { useState } from 'react';
 import AddressTab from './AddressTab';
 import OrderHistory from './OrderHistory';
 import FavouriteTab from './FavouriteTab';
+import LogoutUser from './LogoutUser';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import HistoryIcon from '@mui/icons-material/History';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Logout } from '@mui/icons-material';
 
-const Profile = () => {
+
+const Profile = ({onClickHandler}) => {
+
+
   const [activeTab, setActiveTab] = useState('address');
 
   const handleTabClick = (tabName) => {
@@ -67,12 +72,28 @@ const Profile = () => {
                 </Button>
               </div>
             </Grid>
+
+            <Grid item xs={10}>
+              <div className='profile-tabs'>
+              <Button
+                  onClick={() => handleTabClick('logout')}
+                  variant={activeTab === 'logout' ? 'contained' : 'outlined'}
+                  fullWidth
+                  startIcon={<Logout />} // Add a favorite icon
+                >
+                  Logout
+                </Button>
+
+              
+              </div>
+            </Grid>
           </Grid>
         </div>
             <div>
             {activeTab === 'address' && <AddressTab />}
             {activeTab === 'orderHistory' && <OrderHistory />}
             {activeTab === 'favourites' && <FavouriteTab />}
+            {activeTab === 'logout' && <LogoutUser />}
             </div>
         </div>
         

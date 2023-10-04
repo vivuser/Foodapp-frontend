@@ -97,8 +97,8 @@ const Header = () => {
                 </Link>
                 <SideDrawer isOpen={isSideDrawerOpen} onClose={closeSideDrawer} />
                 <Link onClick={openSideDrawer}>
-                {user.email ?
-                 <div className="bg-white border text-lg text-green-700 border border-gray-400 hover:bg-green-100 rounded-full w-8 h-8 ml-2 mr-2 font-bold" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',margin: '-4px 8px 0 0' }}>{user.email.charAt(0).toUpperCase()}</div>  :
+                {user?.email ?
+                 <div className="bg-white border text-lg text-green-700 border border-gray-400 hover:bg-green-100 rounded-full w-8 h-8 ml-2 mr-2 font-bold" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',margin: '-4px 8px 0 0' }}>{user?.email?.charAt(0).toUpperCase()}</div>  :
                         <FontAwesomeIcon
                             icon={faUser} // Use the user icon here
                             className="ml-1 mr-4 text-2xl text-gray-600"

@@ -26,7 +26,9 @@ const OrderHistory = () => {
         Authorization:  `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`
     }
   })
-    console.log(data)
+    const jsonData = await data.json()
+    setOrderHistory(jsonData.orderList);
+    console.log(orderHistory)
     }
     catch(error){
       console.error(error, "userId doesn't exist")
@@ -35,9 +37,17 @@ const OrderHistory = () => {
   
   return (<>
     <div>
+      <div className='text-2xl text-orange-300 font-bold'>
       Orders History
-      {
-
+      </div>
+      {orderHistory.map((item, index)=> {
+        return (<> 
+        <div className='bg-orange-300 w-56 h-8 rounded-full'>{item?.orderData?.orderNumber}</div>
+        <div className=''>{Object.values(item?.orderData?.cartInfo.orderData).map((item,subIndex)=> {
+          return <div>{item?.item?.name}</div>
+        })
+        }</div>
+        </>)})
       }   
     </div>
   </>)
