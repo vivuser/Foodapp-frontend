@@ -15,7 +15,9 @@ const LogoutUser = () => {
     }
 
     return (<div>
-        {!logout && (<div className="font-serif text-xl text-orange-200 m-8">User Logged out successfully </div>)}
+        <button onClick={()=>changeUserStatus()} className="bg-orange-300 h-10 w-56 border rounded-md m-8">Logout</button>
+        {logout && (<div className="font-serif text-xl text-orange-200 m-8">User Logged out successfully </div>)}
+
         </div>
     )
 }
